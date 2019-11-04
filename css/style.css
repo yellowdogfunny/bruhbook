@@ -1,0 +1,353 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  font-family: 'Raleway', sans-serif;
+  background-color: rgb(62, 62, 62);
+}
+
+.navbar{
+  background-color: rgb(255, 67, 67) !important;
+  border-top: 4px solid black;
+  border-bottom: 2px solid black;
+  padding-top: 0% !important;
+  padding-bottom: 0% !important;
+}
+
+
+.navProfilePic{
+  border: 2px solid rgb(62, 62, 62) !important;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  background-image: url("../images/images.jpg");
+
+  vertical-align: middle;
+}
+
+.navButtons{
+  margin-right: 50px;
+}
+
+.fa-bell{
+  color: rgb(62, 62, 62);
+}
+
+.fa-comment-dots{
+  color: rgb(62, 62, 62);
+}
+
+.searchBtn{
+  background-color: rgb(62, 62, 62);
+  font-size: 1.4em;
+}
+
+.fa-search{
+  color: white;
+}
+
+.row{
+  margin: 0;
+}
+
+.col-6{
+  border: 1px solid red;
+}
+
+.navUserName{
+  display: none;
+}
+
+.container-fluid{
+  padding: 0;
+}
+
+.container{
+  padding: 0;
+}
+
+
+.navUserDropdown{
+  background-color: rgb(255, 67, 67);
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-top: 0% !important;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.navUserDropdown a{
+  padding-top: 5% !important;
+  padding-bottom: 5% !important;
+  color: rgb(62, 62, 62) !important;
+}
+
+.navUserDropdown a:hover{
+    color: rgb(255, 67, 67) !important;
+    background-color: rgb(62, 62, 62) !important;
+}
+
+.dropdownHr{
+  display: none;
+}
+@media(max-width: 992px){
+  .navbar{
+
+    padding-top: 2% !important;
+    padding-bottom: 2% !important;
+  }
+
+  .searchBar{
+    padding-left: 0 !important;
+    margin-top: 7%;
+    font-size: 1.1rem;
+  }
+
+  .inputField{
+    display: block;
+    width: 100% !important;
+    margin: 0 !important;
+    font-size: 1.2rem;
+  }
+
+  .searchBtn{
+    margin-top: 1% !important;
+    width: 100%;
+    font-size: 1.2rem;
+  }
+
+  .buttonsLi{
+    text-align: center;
+    padding-right: 0;
+    margin-top: 3% !important;
+  }
+
+  .navButtons{
+    margin-right: 0;
+    margin-top: 10% !important;
+    font-size: 1.2rem;
+  }
+
+  .navUserName{
+    display: inline-block;
+  }
+
+  .container{
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .navUser{
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .profilePicLi{
+    text-align: center;
+    margin-top: 10% !important;
+  }
+
+  .navUserDropdown{
+    margin-top: 0 !important;
+    text-align: center;
+    background-color: rgb(255, 67, 67) !important;
+    border: none;
+    font-size: 1.2em;
+  }
+
+  .navUserDropdown a{
+      background-color: rgb(255, 67, 67) !important;
+      color: rgb(62, 62, 62) !important;
+  }
+
+  .dropdown-item{
+    border-bottom: 1px solid rgb(67, 67, 67);
+  }
+
+  .empty{
+    display: none;
+  }
+}
+
+
+
+/*
+  content ///////////////////////////////////////////////////////
+*/
+
+.contentContainer{
+  padding: 1%;
+  background-color: white;
+  /*border: 1px solid red;*/
+  background-color: rgb(255, 231, 230);
+}
+
+
+.postStatusContainer{
+  background-color: white;
+  /*border: 1px solid green;*/
+  height: auto;
+  margin-top: 1%;
+}
+
+.postStatusTextarea{
+  border-radius: 10px;
+  border: 1px solid rgb(255, 67, 67);
+  resize: none;
+
+}
+
+.column_nopadding{
+  padding: 0;
+}
+
+.form-group{
+  margin: 0 !important;
+}
+
+.postStatusButtons{
+  width: 95%;
+  padding: 0;
+  margin-top: 1%;
+  background-color: rgb(255, 67, 67);
+}
+
+.postStatusButtons_center{
+  text-align: center;
+}
+
+.partHeader{
+  /*border: 1px solid blue;*/
+  padding: 1%;
+  font-size: 1.4em;
+  background-color: #FFD0CF;
+  box-shadow: 0px 1px 5px rgb(255, 67, 67);
+}
+
+
+.statusContainer{
+  /*border: 1px solid black;*/
+  padding: 1%;
+  margin-top: 5%;
+  border-top: 1px solid rgb(255, 67, 67);
+  border-bottom: 1px solid rgb(255, 67, 67);
+  border-radius: 10px;
+  background-color: rgb(255, 208, 207);
+  box-shadow: 0px 3px 5px rgb(255, 67, 67);
+}
+
+.fa-check-circle{
+  color:  rgb(255, 67, 67);
+}
+
+.edit_delete_btn_div{
+  display: inline-block;
+  color: rgb(62, 62, 62);
+}
+
+.userPostingContainer{
+  /*border: 1px solid red;*/
+  display: flex;
+}
+.userPostingImg{
+  width: 50px;
+  height: 50px;
+  border: 2px solid  rgb(255, 67, 67);
+  border-radius: 50%;
+}
+.userPostingImg img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.userPostingUsername{
+  padding-left: 1% !important;
+  width: 80% !important;
+}
+
+.color_username{
+  color: rgb(62, 62, 62) !important;
+}
+
+.newsfeed_username{
+  font-size: 1.2em;
+}
+
+.statusText{
+  /*border: 1px solid red;*/
+  padding: 1%;
+  overflow-wrap: break-word;
+}
+
+
+
+.statusButtonsContainer{
+  /*border: 1px solid blue;*/
+  padding-left: 1%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.statusButton{
+  margin-left: 2%;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.likeButton{
+  color: white;
+  background-color: rgb(255, 67, 67);
+  border-radius: 20px;
+  padding: 5px;
+}
+
+.commentButton{
+  color: white;
+  background-color: rgb(90, 90, 90);
+  border-radius: 20px;
+  padding: 5px;
+}
+
+.loadMoreDiv{
+  text-align: center;
+  background-color: rgb(255, 67, 67);
+  color: white;
+  margin-top: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  border-radius: 20px;
+}
+
+@media(max-width: 768px){
+  .statusText{
+    font-size: 0.9em;
+  }
+
+  .userPostingContainer{
+    margin-top: 2%;
+  }
+
+  .statusButtonsContainer{
+    margin-top: 7%;
+    margin-bottom: 7%;
+  }
+
+  .postStatusButtonsDiv{
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+
+  .postStatusContainer{
+    margin-top: 2%;
+  }
+}
