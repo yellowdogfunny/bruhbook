@@ -8,6 +8,212 @@ body{
   background-color: rgb(62, 62, 62);
 }
 
+
+
+
+
+
+
+
+
+
+/*
+  LANDING PAGE
+*/
+.leftContainer{
+  background-color: rgb(255, 231, 230);
+  height: 100vh;
+}
+
+.rightContainer{
+  background-color: rgb(255, 67, 67) !important;
+  overflow: hidden;
+}
+
+.leftContainerHeader{
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 5%;
+  overflow: hidden;
+}
+
+.logInContainer{
+  margin-top: 5%;
+  border: 1px solid rgb(255, 67, 67);
+  padding: 2%;
+  box-shadow: 0px 1px 5px rgb(255, 67, 67);
+}
+
+.logInBtn{
+  width: 100% !important;
+  background-color: rgb(255, 67, 67);
+  border-color: rgb(62, 62, 62);
+  border-radius: 15px;
+}
+.logInBtn:hover{
+  background-color: rgb(255, 45, 45);
+}
+
+.createAcc{
+  margin-top: 5%;
+  text-align: center;
+}
+
+.createAccLink{
+  color: rgb(255, 67, 67);
+}
+
+.createAccLink:hover{
+  color: rgb(255, 45, 45);
+}
+
+.loginWarning{
+  color: rgb(255, 45, 45);
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.bruhbookLogo_index{
+  margin-top: 2%;
+  margin-left: 1%;
+  display: flex;
+}
+.bbLogo{
+  width: 60px;
+  height: 60px;
+}
+
+.bbLogo img{
+  width: 100%;
+  height: 100%;
+}
+
+
+.bruhbookName_index{
+  font-size: 2.4em;
+  margin-left: 1%;
+  color: rgb(62, 62, 62);
+}
+
+.slogan_index{
+  /*border: 1px solid blue;*/
+  margin-top: 2%;
+  text-align: center;
+  color: white;
+  font-size: 2em;
+}
+
+.content_index{
+  margin-top: 4%;
+  /*border: 1px solid green;*/
+  text-align: center;
+  color: rgb(255, 231, 230);
+  overflow: hidden;
+}
+
+.imgBox img{
+  width: 80%;
+}
+
+.imgDesc{
+  margin-top: 3%;
+}
+
+.index_footer{
+  color: black;
+  text-align:center;
+  width: 98%;
+  position: absolute;
+  bottom: 10px;
+}
+
+.index_footer a{
+  color: rgb(255, 231, 230);
+}
+
+.responsiveLogo{
+  display: none;
+}
+
+@media(max-width: 767px){
+
+  .responsiveLogo{
+    display: inline-block;
+    margin-top: 5%;
+    height: 50px;
+    font-size: 1.6em;
+  }
+  .responsiveLogo img{
+    height: 80%;
+  }
+
+  .leftContainerHeader{
+    font-size: 1.5em;
+  }
+
+  .bruhbookLogo_index{
+    margin-top: 5%;
+    margin-left: 1%;
+    display: flex;
+    display: none;
+  }
+  .bbLogo{
+    width: 40px;
+    height: 40px;
+  }
+  .bruhbookName_index{
+    font-size: 1.8em;
+    margin-left: 1%;
+    color: rgb(62, 62, 62);
+  }
+
+  .slogan_index{
+    /*border: 1px solid blue;*/
+    margin-top: 20%;
+    text-align: center;
+    color: white;
+    font-size: 2em;
+  }
+
+  .index_footer{
+    color: black;
+    text-align:center;
+    width: 98%;
+    position: relative;
+    bottom: 10px;
+    margin-top: 50%;
+  }
+
+  .imgBox{
+    margin-top: 20%;
+  }
+
+}
+/*
+  LANDING PAGE
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .navbar{
   background-color: rgb(255, 67, 67) !important;
   border-top: 4px solid black;
