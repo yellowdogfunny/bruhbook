@@ -1,3 +1,34 @@
+<?php
+  //session_start();
+  include 'includes/db-inc.php';
+  include 'includes/user-inc.php';
+  $message = "";
+
+  if(empty($_POST['username']) || empty($_POST['password'])){
+    //session_destroy();
+    $message = "Error - empty input fields";
+
+  }else{
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $user = new User();
+    $user->login($username, $password);
+    if(isset($_SESSION['logged_user'])){
+      $message = "Login sucess - ".$_SESSION['logged_user'];
+    }else{
+      $message = "Invalid username or password";
+    }
+  }
+
+    
+  
+  /*
+  if(isset($_SESSION['logged_user'])){
+    //$message = "Logged in as: ".$_SESSION['logged_user'];
+  }
+  */
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -26,26 +57,26 @@
 
           <!--  Form -->
           <div class="logInContainer">
-            <form class="" action="index.html" method="post">
+            <form class="" action="index.php" method="POST">
               <div class="form-group">
                 <label for="usernameInput">Username</label>
-                <input type="text" name="" value="" class="form-control" id="usernameInput">
+                <input type="text" name="username" value="" class="form-control" id="usernameInput">
               </div>
               <br>
 
               <div class="form-group">
                 <label for="usernameInput">Password</label>
-                <input type="text" name="" value="" class="form-control" id="usernameInput">
+                <input type="password" name="password" value="" class="form-control" id="usernameInput">
               </div>
 
               <br>
               <div class="loginWarning">
-                Email or password not correct
+                <?php echo $message; ?>
               </div>
               <br>
 
               <div class="form-group">
-                <button type="submit" class="btn btn-primary logInBtn">Log in</button>
+                <input type="submit" name="login_button_input" value="Log in" class="btn btn-primary logInBtn">
               </div>
 
             </form>
@@ -101,7 +132,7 @@
                 </div>
               </div>
             </div>
-
+            
             <!-- footer -->
             <div class="index_footer">
               Bruhbook bruh - 2019
