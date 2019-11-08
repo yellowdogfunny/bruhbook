@@ -4,9 +4,17 @@
   include 'includes/user-inc.php';
   $message = "";
 
+  //ako je neko logiran, izbjegne se landing page
+  if(isset($_SESSION['logged_user'])){
+    //$message = "Login sucess - ".$_SESSION['logged_user'];
+    header("Location: test/test2.php"); //Ovo chengat na newsfeed.php
+  }else{
+    //header("Location: index.php");
+  }
+
   if(empty($_POST['username']) || empty($_POST['password'])){
     //session_destroy();
-    $message = "Error - empty input fields";
+    $message = "Username or password left empty!";
 
   }else{
     $username = $_POST['username'];
@@ -16,23 +24,17 @@
     $user->login($username, $password);
     if(isset($_SESSION['logged_user'])){
       $message = "Login sucess - ".$_SESSION['logged_user'];
+      header("refresh:0.5;url=test/test2.php"); //Ovo chengat na newsfeed.php
     }else{
       $message = "Invalid username or password";
     }
   }
 
-    
-  
-  /*
-  if(isset($_SESSION['logged_user'])){
-    //$message = "Logged in as: ".$_SESSION['logged_user'];
-  }
-  */
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <?php include 'includes/head_tag-inc.php' ?>
+    <?php include 'includes/head_tag-inc.php'; ?>
     <link rel="icon" href="images/bruhbook_icon.ico" type="image/x-icon">
     <title>Bruhbook</title>
   </head>
@@ -83,7 +85,7 @@
           </div>
 
           <div class="createAcc">
-            <div>Don't have an account yet?<br /> <a href="#" class="createAccLink">Click here to register!</a> </div>
+            <div>Don't have an account yet?<br /> <a href="php/register.php" class="createAccLink">Click here to register!</a> </div>
           </div>
         </div>
 

@@ -557,3 +557,50 @@ body{
     margin-top: 2%;
   }
 }
+
+
+
+
+
+
+
+
+/*
+  REGISTRATION PAGE
+*/
+.regPage{
+  background-color:rgb(255, 208, 207);
+  padding: 1%;
+}
+
+.reg_logo{
+  width: 50px;
+  height: 50px;
+  
+  display: flex;
+  font-size: 2em;
+  color: rgb(62, 62, 62);
+}
+
+.reg_logo img{
+  width: 100%;
+  height: 100%;
+}
+
+.regPh{
+  margin-bottom: 2%;;
+}
+/*
+  REGISTRATION PAGE
+*/
+
+
+
+
+
+
+
+
+
+
+
