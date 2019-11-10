@@ -1,4 +1,12 @@
 
+<?php
+include 'includes/db-inc.php';
+//include 'includes/user-inc.php';
+include "includes/post-inc.php"; 
+if(isset($_SESSION['logged_user'])){
+  $loggedUser = new User();
+
+?>
 <html lang="en">
   <head>
     <?php
@@ -48,125 +56,11 @@
         Newsfeed
       </div>
 
-      <!-- Status container -->
-      <div class="statusContainer">
-        <!-- User who posted a status -->
-        <div class="userPostingContainer">
-
-          <div class="userPostingImg">
-            <img src="images/images.jpg" alt="">
-          </div>
-
-          <div class="userPostingUsername">
-            <span class="color_username newsfeed_username">Person 1</span>
-            &nbsp;
-            <span><i class="fas fa-check-circle"></i></span>
-            &nbsp;
-            <br>
-            <div class="edit_delete_btn_div">
-              <span><i class="fas fa-edit"></i></span>
-              <span><i class="fas fa-trash-alt"></i></span>
-            </div>
-
-          </div>
-
-        </div>
-
-        <hr>
-
-        <!-- da status -->
-        <div class="statusText">
-          orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
-        </div>
-
-        <hr>
-
-        <!-- status buttons -->
-        <div class="statusButtonsContainer">
-          <span class="statusButton likeButton">5 &nbsp; <i class="fas fa-heart"></i></span>
-          <span class="statusButton commentButton">4 &nbsp; <i class="far fa-comment"></i></span>
-        </div>
-
-      </div>
-
-
-
-
-
-
-
-      <!-- Status container 2 -->
-      <div class="statusContainer">
-        <!-- User who posted a status -->
-        <div class="userPostingContainer">
-
-          <div class="userPostingImg">
-            <img src="images/logo.jpg" alt="">
-          </div>
-
-          <div class="userPostingUsername">
-            <span class="color_username newsfeed_username">Person 2</span>
-          </div>
-
-        </div>
-
-        <hr>
-
-        <!-- da status -->
-        <div class="statusText">
-          orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-        </div>
-
-        <hr>
-
-        <!-- status buttons -->
-        <div class="statusButtonsContainer">
-          <span class="statusButton likeButton">1 &nbsp; <i class="fas fa-heart"></i></span>
-          <span class="statusButton commentButton">0 &nbsp; <i class="far fa-comment"></i></span>
-        </div>
-
-      </div>
-
-
-
-
-
-
-
-      <!-- Status container 2 -->
-      <div class="statusContainer">
-        <!-- User who posted a status -->
-        <div class="userPostingContainer">
-
-          <div class="userPostingImg">
-            <img src="images/logo.jpg" alt="">
-          </div>
-
-          <div class="userPostingUsername">
-            <span class="color_username newsfeed_username">Person 3</span>
-            &nbsp;
-            <span><i class="fas fa-check-circle"></i></span>
-            &nbsp;
-          </div>
-
-        </div>
-
-        <hr>
-
-        <!-- da status -->
-        <div class="statusText">
-          orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-        </div>
-
-        <hr>
-
-        <!-- status buttons -->
-        <div class="statusButtonsContainer">
-          <span class="statusButton likeButton">48 &nbsp; <i class="fas fa-heart"></i></span>
-          <span class="statusButton commentButton">14 &nbsp; <i class="far fa-comment"></i></span>
-        </div>
-
-      </div> <!-- end of status -->
+      <!-- POSTS -->
+      <?php
+        $post = new Post();
+        $post->getPosts("from-all");
+      ?>
 
       <div class="loadMoreDiv">
         Load more
@@ -175,3 +69,9 @@
     </div>
   </body>
 </html>
+<?php
+
+}else{
+  header("Location: index.php");
+}
+?>

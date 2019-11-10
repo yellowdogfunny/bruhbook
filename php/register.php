@@ -46,17 +46,17 @@
                     $randImgName = $regUsername."_img-".$randStr."_".$userImg;
 
                     if(is_dir("../images/$regUsername")){
-                        echo "";
+                        echo "<br><font color='red'>Choose a different username</font><br><br>";
                     }else{
                         mkdir("../images/$regUsername");
+
+                        move_uploaded_file($temp, "../images/".$regUsername."/".$randImgName);
+                        $imgUrl = "./images/".$regUsername."/".$randImgName;
+                        $newUser = new User();
+                        $newUser->register($imgUrl, $regUsername, $regEmail, $regPwd);
                     }
+ 
                     
-
-                    move_uploaded_file($temp, "../images/".$regUsername."/".$randImgName);
-                    $imgUrl = "./images/".$regUsername."/".$randImgName;
-
-                    $newUser = new User();
-                    $newUser->register($imgUrl, $regUsername, $regEmail, $regPwd);
                 }
 
             }else{

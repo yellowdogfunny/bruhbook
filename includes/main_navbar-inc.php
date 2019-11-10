@@ -1,3 +1,12 @@
+<?php
+//include 'db-inc.php';
+//include 'user-inc.php';
+
+if(isset($_SESSION['logged_user'])){
+  $loggedUser = new User();
+  
+}
+?>
 <div class="container-fluid">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <ul class="navbar-nav">
@@ -38,8 +47,15 @@
         <li class="nav-item dropdown my-auto profilePicLi">
 
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="navProfilePic"></div>
-            <span class="navUserName">Person</span>
+
+            <!-- promjenit da pfp bude kao u status divu -->
+            <div class="navProfilePic" id="navPfp">
+              <img src="<?php echo $loggedUser->getLoggedUserData("user_img"); ?>" alt="">
+            </div>
+            <!-- promjenit da pfp bude kao u status divu -->
+
+            <span class="navUserName"><?php echo $loggedUser->getLoggedUserData("user_name"); ?></span>
+
           </a>
 
           <div class="dropdown-menu dropdown-menu-right navUserDropdown" aria-labelledby="navbarDropdown">
@@ -47,7 +63,7 @@
             <a class="dropdown-item" href="#">Settings</a>
             <div class="empty">-</div> 
 
-            <a class="dropdown-item" href="#">Log out</a>
+            <a class="dropdown-item" href="php/logout.php">Log out</a>
           </div>
         </li>
 
@@ -57,3 +73,6 @@
     </div>
   </nav>
 </div>
+<?php
+
+?>

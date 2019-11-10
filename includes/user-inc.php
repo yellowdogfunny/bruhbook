@@ -78,11 +78,22 @@ class User extends Database{
   }
 
 
+
+  // Get specific user data
+  public function getUserData($username, $data){
+    $sql = "SELECT * FROM users_table WHERE user_name = '$username'";
+    $res = mysqli_query(Database::connect(), $sql);
+    while($row = mysqli_fetch_array($res)){
+      $data = $row[$data];
+    }
+    return $data;
+  }
+
+
   // Show followers
   // Show messages
 
-  // Create post
-  // Show posts
+  
 
   
 }

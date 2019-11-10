@@ -7,7 +7,7 @@
   //ako je neko logiran, izbjegne se landing page
   if(isset($_SESSION['logged_user'])){
     //$message = "Login sucess - ".$_SESSION['logged_user'];
-    header("Location: test/test2.php"); //Ovo chengat na newsfeed.php
+    header("Location: newsfeed.php"); //Ovo chengat na newsfeed.php
   }else{
     //header("Location: index.php");
   }
@@ -23,8 +23,9 @@
     $user = new User();
     $user->login($username, $password);
     if(isset($_SESSION['logged_user'])){
+      
       $message = "Login sucess - ".$_SESSION['logged_user'];
-      header("refresh:0.5;url=test/test2.php"); //Ovo chengat na newsfeed.php
+      header("refresh:0.25;url=newsfeed.php"); //Ovo chengat na newsfeed.php
     }else{
       $message = "Invalid username or password";
     }
@@ -68,7 +69,7 @@
 
               <div class="form-group">
                 <label for="usernameInput">Password</label>
-                <input type="password" name="password" value="" class="form-control" id="usernameInput">
+                <input type="password" name="password" value="" class="form-control" id="passwordInput">
               </div>
 
               <br>
@@ -147,3 +148,21 @@
     </div>
   </body>
 </html>
+
+
+<?php
+
+if(isset($_SESSION['logged_user'])){
+  echo "
+  <script>
+    document.getElementById('usernameInput').disabled = true;
+    document.getElementById('passwordInput').disabled = true;
+  </script>";
+}else{
+  echo "
+  <script>
+    document.getElementById('usernameInput').disabled = false;
+    document.getElementById('passwordInput').disabled = false;
+  </script>";
+}
+?>

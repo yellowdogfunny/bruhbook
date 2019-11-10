@@ -1,4 +1,5 @@
 <?php
+
 include '../includes/db-inc.php';
 include '../includes/user-inc.php';
 
