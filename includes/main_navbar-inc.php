@@ -4,14 +4,14 @@
 
 if(isset($_SESSION['logged_user'])){
   $loggedUser = new User();
-  
-}
 ?>
+
+
 <div class="container-fluid">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <ul class="navbar-nav">
       <li class="nav-item my-auto">
-        <a class="navbar-brand my-auto" href="#">
+        <a class="navbar-brand my-auto" href="index.php">
           <img src="images/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
           <span class="logoName">bruhbook</span>
         </a>
@@ -59,9 +59,9 @@ if(isset($_SESSION['logged_user'])){
           </a>
 
           <div class="dropdown-menu dropdown-menu-right navUserDropdown" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="profile.php?username=<?php echo $loggedUser->getLoggedUserData("user_name"); ?>">Profile</a>
             <a class="dropdown-item" href="#">Settings</a>
-            <div class="empty">-</div> 
+            <div class="empty">-</div>
 
             <a class="dropdown-item" href="php/logout.php">Log out</a>
           </div>
@@ -75,4 +75,7 @@ if(isset($_SESSION['logged_user'])){
 </div>
 <?php
 
+}else{
+  header("Location: ../index.php");
+}
 ?>

@@ -4,7 +4,7 @@ require_once("db-inc.php");
 class User extends Database{
 
 
-  // Show everyone 
+  // Show everyone
   public function showEveryone(){
     $sql = "SELECT * FROM users_table";
     $query = mysqli_query(Database::connect(), $sql);
@@ -35,7 +35,7 @@ class User extends Database{
   // Register
   public function register($userimg, $username, $email, $password){
     $error = "<br>-<br>";
-    //Check 
+    //Check
     $sql_u = "SELECT * FROM users_table WHERE user_name = '$username'";
     $sql_e = "SELECT * FROM users_table WHERE user_email = '$email'";
     $sql_p = "SELECT * FROM users_table WHERE user_pwd = '$password'";
@@ -54,7 +54,7 @@ class User extends Database{
       //Insert into table
       $sql_register = "INSERT INTO users_table (user_img, user_name, user_email, user_pwd) VALUES
         ('$userimg', '$username', '$email', '$password')
-      "; 
+      ";
       $result = mysqli_query(Database::connect(), $sql_register);
       echo "<br><font color='red'>Registration success!</font><br>";
       echo $userimg;
@@ -93,7 +93,7 @@ class User extends Database{
   // Show followers
   // Show messages
 
-  
 
-  
+
+
 }
