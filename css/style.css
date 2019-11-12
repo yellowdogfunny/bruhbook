@@ -413,6 +413,7 @@ body{
   margin-top: 1%;
 }
 
+
 .postStatusTextarea{
   border-radius: 10px;
   border: 1px solid rgb(255, 67, 67);
@@ -457,6 +458,13 @@ body{
   border-radius: 10px;
   background-color: rgb(255, 208, 207);
   box-shadow: 0px 3px 5px rgb(255, 67, 67);
+}
+
+.statusContainer a{
+  text-decoration: none;
+}
+.statusContainer a:hover{
+  text-shadow: 0px 0px 1px rgb(255, 67, 67);
 }
 
 .fa-check-circle{
@@ -535,7 +543,7 @@ body{
 
 .loadMoreDiv{
   text-align: center;
-  background-color: rgb(255, 67, 67);
+  /*background-color: rgb(255, 67, 67);*/
   color: white;
   margin-top: 5%;
   padding-top: 1%;
@@ -641,6 +649,25 @@ body{
 
 .aboutTxt{
   word-wrap: break-word;
+}
+
+.loadMoreButton{
+  background-color: rgb(255, 67, 67);
+  border: none;
+  width: 100%;
+  height: 50px;
+  border-radius: 20px;
+  color: white;
+}
+
+.loadMoreButton:hover{
+  background-color:   rgb(255, 40, 40);
+}
+
+.upWrapper{
+  width: 300%;
+  height: auto;
+  border: 1px solid red;
 }
 
 @media(max-width: 768px){

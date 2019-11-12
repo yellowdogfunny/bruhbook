@@ -5,8 +5,8 @@ include "user-inc.php";
 
 class Post extends Database{
 
-    public $numPosts = 1;
-
+    public $numPosts = 5;
+    //ajax thing (load more system), posalje post variablu "newNum"
     public function __construct(){
       if(isset($_POST['newNum'])){
         $this->numPosts = $_POST['newNum'];
@@ -16,15 +16,16 @@ class Post extends Database{
     }
 
     // Show all posts or posts from currently logged in user
-    //   (from-all  /  from-logged_user)
-    public function getPosts($from){
+    public function getPosts($from){ //   (from-all  /  from-logged_user / username)
 
         $user = new User();
-
+        //TODO: dodat jos jedan else if u kojem ce bit od followera content
         if($from == "from-all"){
             $sql = "SELECT * FROM posts_table ORDER BY post_id DESC LIMIT $this->numPosts";
         }else if($from == "from-logged_user"){
             $sql = "SELECT * FROM posts_table WHERE post_user = '".$_SESSION['logged_user']."' ORDER BY post_id DESC LIMIT $this->numPosts";
+        }else{
+          $sql = "SELECT * FROM posts_table WHERE post_user = '$from' ORDER BY post_id DESC LIMIT $this->numPosts";
         }
         $res = mysqli_query(Database::connect(), $sql);
         while($row = mysqli_fetch_array($res)){
@@ -36,34 +37,36 @@ class Post extends Database{
             $post_numComments = $row['post_numComments'];
 
             ?>
+
+
             <!-- Status container -->
+
             <div class="statusContainer">
                 <!-- User who posted a status -->
-                <div class="userPostingContainer">
+                  <a href="profile.php?username=<?php echo $post_user; ?>">
+                    <div class="userPostingContainer">
+                      <div class="userPostingImg">
+                          <img src="<?php echo $user->getUserData($post_user, "user_img"); ?>" alt="">
+                      </div>
 
-                <div class="userPostingImg">
-                    <img src="<?php echo $user->getUserData($post_user, "user_img"); ?>" alt="">
-                </div>
+                      <div class="userPostingUsername">
+                          <span class="color_username newsfeed_username"><?php echo $post_user; ?></span>
+                          &nbsp;
+                          <!--
+                          <span><i class="fas fa-check-circle"></i></span>
+                          -->
+                          &nbsp;
+                          <br>
 
-                <div class="userPostingUsername">
-                    <span class="color_username newsfeed_username"><?php echo $post_user; ?></span>
-                    &nbsp;
-                    <!--
-                    <span><i class="fas fa-check-circle"></i></span>
-                    -->
-                    &nbsp;
-                    <br>
-
-                    <div class="edit_delete_btn_div">
-                        <!--
-                    <span><i class="fas fa-edit"></i></span>
-                    <span><i class="fas fa-trash-alt"></i></span>
-                    -->
+                          <div class="edit_delete_btn_div">
+                          <!--
+                          <span><i class="fas fa-edit"></i></span>
+                          <span><i class="fas fa-trash-alt"></i></span>
+                          -->
+                          </div>
+                      </div>
                     </div>
-
-                </div>
-
-                </div>
+                  </a>
 
                 <hr>
 
@@ -76,8 +79,8 @@ class Post extends Database{
 
                 <!-- status buttons -->
                 <div class="statusButtonsContainer">
-                <span class="statusButton likeButton">5 &nbsp; <i class="fas fa-heart"></i></span>
-                <span class="statusButton commentButton">4 &nbsp; <i class="far fa-comment"></i></span>
+                <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
+                <span class="statusButton commentButton"> 0 &nbsp; <i class="far fa-comment"></i></span>
                 </div>
 
             </div>

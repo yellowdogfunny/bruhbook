@@ -11,6 +11,9 @@ if(isset($_SESSION['logged_user'])){
   <head>
     <?php
       include "includes/head_tag-inc.php";
+
+      // from-all, from-logged_user
+      $from = "from-all";
     ?>
 
     <link rel="icon" href="images/bruhbook_icon.ico" type="image/x-icon">
@@ -25,7 +28,7 @@ if(isset($_SESSION['logged_user'])){
           console.log(postNum);
           $("#posts").load("includes/post-inc.php", {
             newNum : postNum,
-            from : "from-all"
+            from : "<?php echo $from; ?>"
           });
         });
       });
@@ -74,7 +77,7 @@ if(isset($_SESSION['logged_user'])){
       <hr>
       <!-- Header 2 container -->
       <div class="partHeader">
-        Newsfeed
+        Newsfeed - all
       </div>
 
       <!-- POSTS -->
@@ -82,12 +85,12 @@ if(isset($_SESSION['logged_user'])){
         <?php
 
           $post = new Post();
-          $post->getPosts("from-all");
+          $post->getPosts($from);
         ?>
       </div>
 
       <div class="loadMoreDiv">
-        <button type="button" id="loadMoreButton">Load more</button>
+        <button type="button" id="loadMoreButton" class="loadMoreButton">Load more</button>
       </div>
 
     </div>

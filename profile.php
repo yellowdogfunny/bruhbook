@@ -3,9 +3,20 @@
 include 'includes/db-inc.php';
 //include 'includes/user-inc.php';
 include "includes/post-inc.php";
-if(isset($_SESSION['logged_user'])){
-  $loggedUser = new User();
+$user = new User();
+if(isset($_GET['username'])){
+  $username = $_GET['username'];
+}else if(isset($_SESSION['logged_user'])){
+  $username = $_SESSION['logged_user'];
+}else{
+  header("Location: index.php");
+}
 
+if($_SESSION['logged_user'] != $username){
+  $postsHeader = "Posts";
+}else{
+  $postsHeader = "My posts";
+}
 ?>
 <html lang="en">
   <head>
@@ -13,6 +24,23 @@ if(isset($_SESSION['logged_user'])){
       include "includes/head_tag-inc.php";
     ?>
     <link rel="icon" href="images/bruhbook_icon.ico" type="image/x-icon">
+
+    <script>
+    $(document).ready(function(){
+      var postNum = 5;
+      var newNum = 0;
+      var from;
+      $("#loadMoreButton").click(function(){
+        postNum = postNum + 5;
+        console.log(postNum);
+        $("#posts").load("includes/post-inc.php", {
+          newNum : postNum,
+          from : "<?php echo $username; ?>"
+        });
+      });
+    });
+    </script>
+
     <title>Bruhbook</title>
   </head>
 
@@ -63,7 +91,7 @@ if(isset($_SESSION['logged_user'])){
         <div class="row">
 
           <div class="col-12 col-md-3 profile_img">
-            <img src="<?php echo $loggedUser->getLoggedUserData("user_img"); ?>" alt=""><br>
+            <img src="<?php echo $user->getUserData($username, "user_img"); ?>" alt=""><br>
 
           </div>
 
@@ -72,13 +100,13 @@ if(isset($_SESSION['logged_user'])){
               <tr class="profile_tableRow">
                 <td class="profile_tableHeader">Username: </td>
                 <td class="profile_tableData">
-                  <?php echo $loggedUser->getLoggedUserData("user_name"); ?>
+                  <?php echo $user->getUserData($username, "user_name"); ?>
                 </td>
               </tr>
               <tr class="profile_tableRow">
                 <td class="profile_tableHeader">Email:</td>
                 <td class="profile_tableData">
-                  <?php echo $loggedUser->getLoggedUserData("user_email"); ?>
+                  <?php echo $user->getUserData($username, "user_email"); ?>
                 </td>
               </tr>
 
@@ -110,24 +138,27 @@ if(isset($_SESSION['logged_user'])){
 
       <hr>
       <div class="partHeader">
-        My posts
+        <?php echo $postsHeader; ?>
       </div>
-      <!-- POSTS -->
-      <?php
-        $post = new Post();
-        $post->getPosts("from-logged_user");
-      ?>
+      <div class="posts" id="posts">
+        <!-- POSTS -->
+        <?php
+          $post = new Post();
+          $post->getPosts($username);
+        ?>
+      </div>
 
-      
+
+      <div class="loadMoreDiv">
+        <button type="button" id="loadMoreButton" class="loadMoreButton">Load more</button>
+      </div>
 
     </div>
   </body>
 </html>
 <?php
 
-}else{
-  header("Location: index.php");
-}
+
 ?>
 
 <?php
