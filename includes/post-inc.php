@@ -38,52 +38,55 @@ class Post extends Database{
 
             ?>
 
-
             <!-- Status container -->
+            <a href="view_post.php?postId=<?php echo $post_id; ?>&username=<?php echo $post_user; ?>" class="postLink">
+              <div class="statusContainer" id="openModal2">
+                  <!-- User who posted a status -->
+                  <object> <!-- nested link sulution -->
+                    <a href="profile.php?username=<?php echo $post_user; ?>">
+                      <div class="userPostingContainer">
+                        <div class="userPostingImg">
+                            <img src="<?php echo $user->getUserData($post_user, "user_img"); ?>" alt="">
+                        </div>
 
-            <div class="statusContainer">
-                <!-- User who posted a status -->
-                  <a href="profile.php?username=<?php echo $post_user; ?>">
-                    <div class="userPostingContainer">
-                      <div class="userPostingImg">
-                          <img src="<?php echo $user->getUserData($post_user, "user_img"); ?>" alt="">
+                        <div class="userPostingUsername">
+                            <span class="color_username newsfeed_username"><?php echo $post_user; ?></span>
+                            &nbsp;
+                            <!--
+                            <span><i class="fas fa-check-circle"></i></span>
+                            -->
+                            &nbsp;
+                            <br>
+
+                            <div class="edit_delete_btn_div">
+                            <!--
+                            <span><i class="fas fa-edit"></i></span>
+                            <span><i class="fas fa-trash-alt"></i></span>
+                            -->
+                            </div>
+                        </div>
                       </div>
+                    </a>
+                  </object>
 
-                      <div class="userPostingUsername">
-                          <span class="color_username newsfeed_username"><?php echo $post_user; ?></span>
-                          &nbsp;
-                          <!--
-                          <span><i class="fas fa-check-circle"></i></span>
-                          -->
-                          &nbsp;
-                          <br>
+                  <hr>
 
-                          <div class="edit_delete_btn_div">
-                          <!--
-                          <span><i class="fas fa-edit"></i></span>
-                          <span><i class="fas fa-trash-alt"></i></span>
-                          -->
-                          </div>
-                      </div>
-                    </div>
-                  </a>
+                  <!-- da status -->
+                  <div class="statusText">
+                      <?php echo $post_text; ?>
+                  </div>
 
-                <hr>
+                  <hr>
 
-                <!-- da status -->
-                <div class="statusText">
-                    <?php echo $post_text; ?>
-                </div>
+                  <!-- status buttons -->
+                  <div class="statusButtonsContainer">
+                  <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
+                  <span class="statusButton commentButton"> 0 &nbsp; <i class="far fa-comment"></i></span>
+                  </div>
 
-                <hr>
+              </div>
+            </a>
 
-                <!-- status buttons -->
-                <div class="statusButtonsContainer">
-                <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
-                <span class="statusButton commentButton"> 0 &nbsp; <i class="far fa-comment"></i></span>
-                </div>
-
-            </div>
 
             <?php
         }
@@ -105,9 +108,69 @@ class Post extends Database{
 
 
 
-    // Show all followers posts
+    //Get specific post
+    public function getSinglePost($postid, $postuser){
+      $sql_getsp = "SELECT * FROM posts_table WHERE post_id = '$postid' AND post_user = '$postuser'";
+      $result = mysqli_query(Database::connect(), $sql_getsp);
+      $spCount = mysqli_num_rows($result);
+      $user = new User();
+      if($spCount > 0){
+        while($row = mysqli_fetch_array($result)){
+          $post_id = $row['post_id'];
+          $post_user = $row['post_user'];
+          $post_text = $row['post_text'];
+          $post_img = $row['post_img'];
+          $post_likes = $row['post_likes'];
+          $post_numComments = $row['post_numComments'];
+          ?>
+          <div class="statusContainer" id="openModal2">
+              <!-- User who posted a status -->
+              <a href="profile.php?username=<?php echo $post_user; ?>">
+                <div class="userPostingContainer">
+                  <div class="userPostingImg">
+                      <img src="<?php echo $user->getUserData($post_user, "user_img"); ?>" alt="">
+                  </div>
+                  <div class="userPostingUsername">
+                      <span class="color_username newsfeed_username"><?php echo $post_user; ?></span>
+                      &nbsp;
+                      <!--
+                      <span><i class="fas fa-check-circle"></i></span>
+                      -->
+                      &nbsp;
+                      <br>
+                      <div class="edit_delete_btn_div">
+                      <!--
+                      <span><i class="fas fa-edit"></i></span>
+                      <span><i class="fas fa-trash-alt"></i></span>
+                      -->
+                      </div>
+                  </div>
+                </div>
+              </a>
+              <hr>
+              <!-- da status -->
+              <div class="statusText">
+                  <?php echo $post_text; ?>
+              </div>
+              <hr>
+              <!-- status buttons -->
+              <div class="statusButtonsContainer">
+              <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
+              <span class="statusButton commentButton"> 0 &nbsp; <i class="far fa-comment"></i></span>
+              </div>
+          </div>
+          <?php
+        }
+      }else{
+        header("Location: index.php");
+      }
+    }
 
-    // Show posts from a specific person
+
+
+
+
+    // Show all followers posts
 
     // Create post
     public function createPost($user, $post_txt){

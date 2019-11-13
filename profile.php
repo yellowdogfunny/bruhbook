@@ -96,13 +96,22 @@ if($_SESSION['logged_user'] != $username){
           </div>
 
           <div class="col-12 col-md-6 profile_user-info">
+
+            <?php
+              if($_GET['username'] != $_SESSION['logged_user']){
+
+                ?>
+                <button type="button" name="button" class="btn btn-danger">Follow</button>
+                <br /><br />
+                <?php
+
+              }
+            ?>
+
+
+
             <table>
-              <tr class="profile_tableRow">
-                <td class="profile_tableHeader">Username: </td>
-                <td class="profile_tableData">
-                  <?php echo $user->getUserData($username, "user_name"); ?>
-                </td>
-              </tr>
+              <?php echo " <h2>$username</h2><br /> "; ?>
               <tr class="profile_tableRow">
                 <td class="profile_tableHeader">Email:</td>
                 <td class="profile_tableData">
@@ -155,7 +164,9 @@ if($_SESSION['logged_user'] != $username){
 
     </div>
   </body>
+  
 </html>
+
 <?php
 
 
