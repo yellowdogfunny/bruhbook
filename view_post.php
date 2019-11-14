@@ -1,8 +1,6 @@
 <?php
-include 'includes/db-inc.php';
-//include 'includes/user-inc.php';
-include 'includes/post-inc.php';
-//include 'includes/comment-inc.php';
+session_start();
+include 'includes/class-autoloader.php';
 
 if(isset($_GET['postId']) && isset($_GET['username'])){
   $post_id = $_GET['postId'];
@@ -37,13 +35,21 @@ if(isset($_GET['postId']) && isset($_GET['username'])){
                 comment_txt: comment_txt,
                 comment_post: <?php echo "'".$_GET["postId"]."'"; ?>,
                 comment_user: <?php echo "'".$_SESSION["logged_user"]."'"; ?>
+              },
+              success: function(data){
+                $("#comment_txt").val('');
+                window.location.reload(); //TODO: promjenit ovo da se nekako odma displejaju komentari a ne da se refresha 
               }
             });
           }else{
-            $("#post_comment_btn").style.disabled = 'disabled';
+            //alert("Error");
+            $("#comment_txt").css("box-shadow", "0px 1px 5px rgb(255, 67, 67)");
           }
         });
       });
+
+
+
     </script>
     <title>Bruhbook</title>
   </head>
@@ -68,7 +74,7 @@ if(isset($_GET['postId']) && isset($_GET['username'])){
 
       <!-- Write a comment -->
       <div class="postStatusContainer">
-        <form class="" action="" method="">
+        <form class="" action="" method="" id="cmtForm">
           <div class="row">
 
             <div class="col-12 col-md-9 column_nopadding">
@@ -96,47 +102,19 @@ if(isset($_GET['postId']) && isset($_GET['username'])){
         Comments:
       </div>
 
-      <?php
-        $comment = new Comment();
-        $comment->showComments();
-      ?>
+      <!-- COMMENTS -->
+      <div class="display">
 
-      <!-- comment -->
-      <div class="statusContainer commentContainer" id="openModal2">
-          <!-- Comment -->
-        <div class="userCommenting">
-          <div class="userPostingImg">
-              <img src="images/images.jpg" alt="">
-          </div>
+        <?php
 
-          <div class="commentUsername">
-            Person:
-          </div>
-        </div>
+          $comment = new Comment();
+          $comment->showComments($_GET['postId']);
 
-        <div class="comment">
-          Wow what a great post man bro
-        </div>
+        ?>
       </div>
 
-      <!-- comment 2 -->
-      <div class="statusContainer commentContainer" id="openModal2">
-          <!-- Comment -->
 
-          <div class="userCommenting">
-            <div class="userPostingImg">
-                <img src="images/hbru.jpg" alt="">
-            </div>
 
-            <div class="commentUsername">
-              Person_2:
-            </div>
-          </div>
-
-        <div class="comment">
-          Bruhhhh bruhhhhBruhhhh bruhhhhBruhhhh bruhhhh
-        </div>
-      </div>
     </div>
   </body>
 </html>

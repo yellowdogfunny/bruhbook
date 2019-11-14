@@ -1,8 +1,8 @@
 
 <?php
-include 'includes/db-inc.php';
-//include 'includes/user-inc.php';
-include "includes/post-inc.php";
+session_start();
+include 'includes/class-autoloader.php';
+
 $user = new User();
 if(isset($_GET['username'])){
   $username = $_GET['username'];
@@ -17,6 +17,16 @@ if($_SESSION['logged_user'] != $username){
 }else{
   $postsHeader = "My posts";
 }
+
+
+if(isset($_POST['followSender']) && isset($_POST['followReceiver'])){
+  $sender = $_POST['followSender'];
+  $receiver = $_POST['followReceiver'];
+
+  $follow = new Follow();
+  $follow->follow_function($sender, $receiver);
+}
+
 ?>
 <html lang="en">
   <head>
@@ -33,9 +43,56 @@ if($_SESSION['logged_user'] != $username){
       $("#loadMoreButton").click(function(){
         postNum = postNum + 5;
         console.log(postNum);
-        $("#posts").load("includes/post-inc.php", {
+        $("#posts").load("classes/post.class.php", {
           newNum : postNum,
           from : "<?php echo $username; ?>"
+        });
+      });
+
+      //Follow
+      $("#followButton").click(function(){
+        $.ajax({
+          //url: "php/follow.php",
+          type: "POST",
+          data: {
+            followSender: <?php echo "'".$_SESSION['logged_user']."'"; ?>,
+            followReceiver: <?php echo "'".$_GET['username']."'"; ?>
+          },
+          success: function(data){
+            /*alert("You (<?php //echo $_SESSION['logged_user'] ?>) are now follwing <?php //echo $_GET['username']; ?>");*/
+
+            /*
+            $("#followButton").css("color", "white");
+            $("#followButton").css("background-color", "rgb(255, 67, 67)");
+            $("#followButton").html('Following');
+            $("$followButton").attr("id", "unFollowButton");
+            */
+            window.location.reload(); //TODO: napravit da se ne mora refreshat
+          }
+        });
+      });
+
+      //Unfollow
+      $("#unFollowButton").click(function(){
+        $.ajax({
+          //url: "php/follow.php",
+          type: "POST",
+          data: {
+            followSender: <?php echo "'".$_SESSION['logged_user']."'"; ?>,
+            followReceiver: <?php echo "'".$_GET['username']."'"; ?>
+          },
+          success: function(data){
+            //alert("Unfollowed");
+
+            /*
+            $("#unFollowButton").css("color", "rgb(255, 67, 67)");
+            $("#unFollowButton").css("background-color", "rgb(255, 220, 220)");
+            $("#unFollowButton").html('Follow');
+            $("#unFollowButton").attr("id", "followButton");
+            */
+
+            window.location.reload(); //TODO: napravit da se ne mora refreshat
+          }
         });
       });
     });
@@ -100,9 +157,17 @@ if($_SESSION['logged_user'] != $username){
             <?php
               if($_GET['username'] != $_SESSION['logged_user']){
 
+                $fBtn = new Follow();
+                $fBtn->followBtn($_SESSION['logged_user'], $_GET['username']);
+
                 ?>
-                <button type="button" name="button" class="btn btn-danger">Follow</button>
-                <br /><br />
+                <!--
+                <form class="" action="" method="">
+                  <button type="button" name="follow" class="btn btn-danger flwBtn" id="followButton">Follow</button>
+                </form>
+                -->
+                <br />
+
                 <?php
 
               }
@@ -122,13 +187,25 @@ if($_SESSION['logged_user'] != $username){
               <tr class="profile_tableRow">
                 <td class="profile_tableHeader">Followers:</td>
                 <td class="profile_tableData">
-                  123123
+                  <?php
+                    $user->getNumFollowers($username);
+                  ?>
+                </td>
+              </tr>
+              <tr class="profile_tableRow">
+                <td class="profile_tableHeader">Following:</td>
+                <td class="profile_tableData">
+                  <?php
+                    $user->getNumFollowing($username);
+                  ?>
                 </td>
               </tr>
               <tr class="profile_tableRow">
                 <td class="profile_tableHeader">Posts:</td>
                 <td class="profile_tableData">
-                  41
+                  <?php
+                    $user->getNumPosts($username);
+                  ?>
                 </td>
               </tr>
             </table>
@@ -164,7 +241,7 @@ if($_SESSION['logged_user'] != $username){
 
     </div>
   </body>
-  
+
 </html>
 
 <?php

@@ -1,7 +1,7 @@
 <?php
-  //session_start();
-  include 'includes/db-inc.php';
-  include 'includes/user-inc.php';
+  session_start();
+  include 'includes/class-autoloader.php';
+
   $message = "";
 
   //ako je neko logiran, izbjegne se landing page
@@ -23,7 +23,7 @@
     $user = new User();
     $user->login($username, $password);
     if(isset($_SESSION['logged_user'])){
-      
+
       $message = "Login sucess - ".$_SESSION['logged_user'];
       header("refresh:0.25;url=newsfeed.php"); //Ovo chengat na newsfeed.php
     }else{
@@ -135,7 +135,7 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- footer -->
             <div class="index_footer">
               Bruhbook bruh - 2019

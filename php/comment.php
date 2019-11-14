@@ -1,5 +1,7 @@
 <?php
-include "../includes/comment-inc.php";
+session_start();
+
+require_once("../classes/comment.class.php");
 
   if(isset($_POST['comment_txt']) && isset($_POST['comment_post']) && isset($_POST['comment_user'])){
     echo $txt = $_POST['comment_txt'];

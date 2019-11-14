@@ -1,6 +1,6 @@
 <?php
-session_start();
-require_once("db-inc.php");
+//session_start();
+require_once("database.class.php");
 class User extends Database{
 
 
@@ -91,7 +91,39 @@ class User extends Database{
 
 
   // Show followers
-  // Show messages
+  public function getNumFollowers($username){
+    $sql_r = "SELECT follow_receiver FROM follow_table WHERE follow_receiver = '$username'";
+    $res_r = mysqli_query(Database::connect(), $sql_r);
+    if(mysqli_num_rows($res_r) > 0){
+      echo mysqli_num_rows($res_r);
+    }else{
+      echo "0";
+    }
+  }
+
+  // Show how many people is someone following
+  public function getNumFollowing($username){
+    $sql_r = "SELECT follow_sender FROM follow_table WHERE follow_sender = '$username'";
+    $res_r = mysqli_query(Database::connect(), $sql_r);
+    if(mysqli_num_rows($res_r) > 0){
+      echo mysqli_num_rows($res_r);
+    }else{
+      echo "0";
+    }
+  }
+
+  // Show how many posts someone posted
+  public function getNumPosts($username){
+    $sql = "SELECT post_user FROM posts_table WHERE post_user = '$username'";
+    $res = mysqli_query(Database::connect(), $sql);
+    if(mysqli_num_rows($res) > 0){
+      echo mysqli_num_rows($res);
+    }else{
+      echo "0";
+    }
+  }
+
+
 
 
 

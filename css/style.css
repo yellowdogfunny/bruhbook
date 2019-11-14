@@ -805,3 +805,23 @@ body{
   border-radius: 10px;
   margin-top: 0;
 }
+
+.userCommentingLink{
+  padding-left: 10px;
+  color: rgb(62, 62, 62);
+}
+
+.userCommentingLink:hover{
+  color: rgb(62, 62, 62);
+  text-shadow: 0 0 0 1px;
+}
+
+.flwBtn{
+  background-color: rgb(255, 220, 220);
+  color: rgb(255, 67, 67);
+}
+
+.unFlwBtn{
+  background-color: rgb(255, 67, 67);
+  color: white;
+}

@@ -1,6 +1,4 @@
 <?php
-//include 'db-inc.php';
-//include 'user-inc.php';
 
 if(isset($_SESSION['logged_user'])){
   $loggedUser = new User();

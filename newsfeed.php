@@ -1,8 +1,8 @@
 
 <?php
-include 'includes/db-inc.php';
-//include 'includes/user-inc.php';
-include "includes/post-inc.php";
+session_start();
+include 'includes/class-autoloader.php';
+
 if(isset($_SESSION['logged_user'])){
   $loggedUser = new User();
 
@@ -26,7 +26,7 @@ if(isset($_SESSION['logged_user'])){
         $("#loadMoreButton").click(function(){
           postNum = postNum + 5;
           console.log(postNum);
-          $("#posts").load("includes/post-inc.php", {
+          $("#posts").load("classes/post.class.php", {
             newNum : postNum,
             from : "<?php echo $from; ?>"
           });

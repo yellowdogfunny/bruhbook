@@ -1,7 +1,7 @@
 <?php
-    include '../includes/db-inc.php';
-    include '../includes/user-inc.php';
+  session_start();
 
+  require_once("../classes/user.class.php");
 
 ?>
 <!DOCTYPE html>
@@ -19,19 +19,19 @@
             Bruhbook
         </div>
     </a>
-    <br><br>            
+    <br><br>
     <div class="container">
         <div class="partHeader regPh">Registration</div>
         <?php
-            
+
             if(isset($_GET['emptyFields'])){
                 echo "<br><font color='red'>Make sure to insert all the data</font><br><br>";
             }else{
                 echo " ";
             }
-            
+
             if(isset($_POST['register'])){
-                
+
                 if(empty($_FILES["img_file"]["name"]) || empty($_POST['reg_username']) || empty($_POST['reg_email']) || empty($_POST['reg_pwd'])){
                     header("Location: register.php?emptyFields=1");
                 }else{
@@ -55,8 +55,8 @@
                         $newUser = new User();
                         $newUser->register($imgUrl, $regUsername, $regEmail, $regPwd);
                     }
- 
-                    
+
+
                 }
 
             }else{
@@ -71,7 +71,7 @@
             <input type="submit" name="register" class="btn btn-danger form-control">
         </form>
 
-        
+
     </div>
 </body>
 </html>
