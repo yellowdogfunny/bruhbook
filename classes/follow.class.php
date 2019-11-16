@@ -42,10 +42,4 @@ class Follow extends Database{
     }
   }
 
-
-  //Unfollow system
-
 }
-/*
-$flw = new Follow();
-$flw->follow_function("kenyad", "zenyad");*/

@@ -18,15 +18,6 @@ if($_SESSION['logged_user'] != $username){
   $postsHeader = "My posts";
 }
 
-
-if(isset($_POST['followSender']) && isset($_POST['followReceiver'])){
-  $sender = $_POST['followSender'];
-  $receiver = $_POST['followReceiver'];
-
-  $follow = new Follow();
-  $follow->follow_function($sender, $receiver);
-}
-
 ?>
 <html lang="en">
   <head>
@@ -37,6 +28,8 @@ if(isset($_POST['followSender']) && isset($_POST['followReceiver'])){
 
     <script>
     $(document).ready(function(){
+
+      //Load more
       var postNum = 5;
       var newNum = 0;
       var from;
@@ -59,14 +52,6 @@ if(isset($_POST['followSender']) && isset($_POST['followReceiver'])){
             followReceiver: <?php echo "'".$_GET['username']."'"; ?>
           },
           success: function(data){
-            /*alert("You (<?php //echo $_SESSION['logged_user'] ?>) are now follwing <?php //echo $_GET['username']; ?>");*/
-
-            /*
-            $("#followButton").css("color", "white");
-            $("#followButton").css("background-color", "rgb(255, 67, 67)");
-            $("#followButton").html('Following');
-            $("$followButton").attr("id", "unFollowButton");
-            */
             window.location.reload(); //TODO: napravit da se ne mora refreshat
           }
         });
@@ -82,20 +67,14 @@ if(isset($_POST['followSender']) && isset($_POST['followReceiver'])){
             followReceiver: <?php echo "'".$_GET['username']."'"; ?>
           },
           success: function(data){
-            //alert("Unfollowed");
-
-            /*
-            $("#unFollowButton").css("color", "rgb(255, 67, 67)");
-            $("#unFollowButton").css("background-color", "rgb(255, 220, 220)");
-            $("#unFollowButton").html('Follow');
-            $("#unFollowButton").attr("id", "followButton");
-            */
-
             window.location.reload(); //TODO: napravit da se ne mora refreshat
           }
         });
       });
+
     });
+
+
     </script>
 
     <title>Bruhbook</title>
@@ -156,6 +135,13 @@ if(isset($_POST['followSender']) && isset($_POST['followReceiver'])){
 
             <?php
               if($_GET['username'] != $_SESSION['logged_user']){
+                if(isset($_POST['followSender']) && isset($_POST['followReceiver'])){
+                  $sender = $_POST['followSender'];
+                  $receiver = $_POST['followReceiver'];
+
+                  $follow = new Follow();
+                  $follow->follow_function($sender, $receiver);
+                }
 
                 $fBtn = new Follow();
                 $fBtn->followBtn($_SESSION['logged_user'], $_GET['username']);
@@ -172,8 +158,6 @@ if(isset($_POST['followSender']) && isset($_POST['followReceiver'])){
 
               }
             ?>
-
-
 
             <table>
               <?php echo " <h2>$username</h2><br /> "; ?>
