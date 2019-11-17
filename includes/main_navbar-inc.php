@@ -36,7 +36,14 @@ if(isset($_SESSION['logged_user'])){
         <!-- buttons -->
         <li class="nav-item my-auto buttonsLi">
           <div class="navButtons">
-            <a href="#"><i class="fas fa-comment-dots fa-2x mr-3"></i></a>
+
+            <a href="messages.php" class="navBtn">
+              <i class="fas fa-comment-dots fa-2x mr-3"></i>
+              <div class="newMessages">
+                <span class="nM">3</span>
+              </div>
+            </a>
+
             <a href="#"><i class="fas fa-bell fa-2x"></i></a>
           </div>
         </li>

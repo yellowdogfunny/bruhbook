@@ -55,6 +55,10 @@ class Comment extends Database{
         <?php
 
       }
+    }else{
+      echo "<div style='text-align:center;margin-top:20px;font-size:1.5em;'>
+        There are no comments yet :(
+      </div>";
     }
   }
 

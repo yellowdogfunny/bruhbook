@@ -115,7 +115,7 @@ if($_SESSION['logged_user'] != $username){
       </div>
       -->
 
-
+      <hr>
       <!-- Header 2 container -->
       <div class="partHeader">
         Profile

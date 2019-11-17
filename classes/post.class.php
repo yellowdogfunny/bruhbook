@@ -5,7 +5,7 @@ require_once("user.class.php");
 
 class Post extends Database{
 
-    public $numPosts = 5;
+    public $numPosts;
     //ajax thing (load more system), posalje post variablu "newNum"
     public function __construct(){
       if(isset($_POST['newNum'])){
@@ -35,7 +35,7 @@ class Post extends Database{
             $post_img = $row['post_img'];
             $post_likes = $row['post_likes'];
             $post_numComments = $row['post_numComments'];
-
+            $post_date = $row['post_date'];
             ?>
 
             <!-- Status container -->
@@ -82,7 +82,8 @@ class Post extends Database{
                   <div class="statusButtonsContainer">
                     <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
                     <span class="statusButton commentButton"> 0 &nbsp; <i class="far fa-comment"></i></span>
-                    <span class="statusButton">13.11.2019.</span>
+                    <span class="statusButton"><?php echo $post_date; ?></span>
+
                   </div>
 
               </div>
@@ -110,6 +111,7 @@ class Post extends Database{
           $post_img = $row['post_img'];
           $post_likes = $row['post_likes'];
           $post_numComments = $row['post_numComments'];
+          $post_date = $row['post_date'];
           ?>
           <div class="statusContainer" id="openModal2">
               <!-- User who posted a status -->
@@ -125,6 +127,37 @@ class Post extends Database{
                       <span><i class="fas fa-check-circle"></i></span>
                       -->
                       &nbsp;
+                      <?php
+                        if($post_user == $_SESSION['logged_user']){
+                          ?>
+                          <div class="d-e-btns">
+                            <object>
+                              <a href="#">
+                                <span><i class="fas fa-edit editBtn"></i></span>
+                              </a>
+                              <a href="#">
+                                <span><i class="fas fa-trash-alt delBtn"></i></span>
+                              </a>
+                            </object>
+                          </div>
+
+
+
+                          <?php
+                        }else{
+                          ?>
+                          <div class="d-e-btns">
+                            <object>
+                              <a href="#">
+                                <span class="statusButton" style="color:red;">Block</span>
+                              </a>
+                            </object>
+                          </div>
+
+
+                          <?php
+                        }
+                        ?>
                       <br>
                       <div class="edit_delete_btn_div">
                       <!--
@@ -145,6 +178,8 @@ class Post extends Database{
               <div class="statusButtonsContainer">
               <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
               <span class="statusButton commentButton"> 0 &nbsp; <i class="far fa-comment"></i></span>
+              <span class="statusButton"><?php echo $post_date; ?></span>
+
               </div>
           </div>
           <?php
@@ -163,9 +198,10 @@ class Post extends Database{
 
     // Create post
     public function createPost($user, $post_txt){
-      $sql_createPost = "INSERT INTO posts_table (post_user, post_text)
+      $date = date("d.m.Y");
+      $sql_createPost = "INSERT INTO posts_table (post_user, post_text, post_date)
         VALUES
-        ('$user', '$post_txt')
+        ('$user', '$post_txt', '$date')
       ";
 
       $result = mysqli_query(Database::connect(), $sql_createPost);

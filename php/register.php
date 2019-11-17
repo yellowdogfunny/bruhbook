@@ -33,7 +33,7 @@
             if(isset($_POST['register'])){
 
                 if(empty($_FILES["img_file"]["name"]) || empty($_POST['reg_username']) || empty($_POST['reg_email']) || empty($_POST['reg_pwd'])){
-                    header("Location: register.php?emptyFields=1");
+                    header("Location: register.php?emptyFields=1&e_img=".$_FILES['img_file']['name']."&e_username=".$_POST['reg_username']."&e_email=".$_POST['reg_email']."");
                 }else{
                     $regUsername = $_POST['reg_username'];
                     $regEmail = $_POST['reg_email'];
@@ -62,11 +62,22 @@
             }else{
                 echo "";
             }
+
+            if(isset($_GET['e_img']) || isset($_GET['e_username']) || isset($_GET['e_email'])){
+              $e_img = $_GET['e_img']; // img doesnt return :(
+              $e_username = $_GET['e_username'];
+              $e_email = $_GET['e_email'];
+
+            }else{
+              $e_img = "";  // img doesnt return :(
+              $e_username = "";
+              $e_email = "";
+            }
         ?>
         <form action="register.php" method="POST" enctype='multipart/form-data'>
-            Choose a profile picture: <input type="file" name="img_file" class=""><br><br>
-            Name: <input type="text" name="reg_username" class="form-control"><br>
-            Email: <input type="text" name="reg_email" class="form-control"><br>
+            Choose a profile picture: <input type="file" name="img_file" class="" value="<?php echo $e_img; ?>"><br><br>
+            Name: <input type="text" name="reg_username" class="form-control" value="<?php echo $e_username; ?>"><br>
+            Email: <input type="text" name="reg_email" class="form-control" value="<?php echo $e_email; ?>"><br>
             Password: <input type="password" name="reg_pwd" class="form-control"><br>
             <input type="submit" name="register" class="btn btn-danger form-control">
         </form>
