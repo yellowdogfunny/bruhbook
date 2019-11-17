@@ -910,26 +910,29 @@ body{
 .peopleDiv{
 
   box-shadow: 0px 0px 5px rgb(255, 67, 67);
-  height: 400px;
+  height: 70vh;
   overflow-y: scroll;
 }
 .messagesDiv{
-  border: 1px solid blue;
+  /*border: 1px solid blue;*/
   position: relative;
 }
 
 .personContainer{
-  border: 1px solid green;
+  border-bottom: 1px solid rgb(255, 67, 67);
   position: relative;
   display: flex;
   margin-top: 5px;
   margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .personImg{
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  border: 2px solid rgb(255, 67, 67);
 }
 
 .personImg img{
@@ -982,4 +985,75 @@ body{
   box-shadow: 0 0 5px red;
   border-radius: 50%;
   margin-left: 5px;
+}
+
+.chatBox{
+  /*border: 1px solid red;*/
+  box-shadow: 0 0 5px red;
+  padding: 5px;
+  height: 535px;
+  overflow-y: scroll;
+}
+
+.message{
+  /*border: 1px solid blue;*/
+  position: relative;
+}
+
+.msgtxtDivFriend{
+  word-wrap: break-word;
+  display: inline-block;
+  padding: 10px;
+  max-width: 40%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: rgb(255, 67, 67);
+  border-radius: 20px;
+  color: white;
+}
+
+.msgtxtDivLoggedUser{
+  word-wrap: break-word;
+  display: inline-block;
+  padding: 10px;
+  max-width: 40%;
+  text-align: left;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: rgb(255, 200, 200);
+  color: rgb(62, 62, 62);
+  border-radius: 20px;
+}
+
+.msgLoggedUser{
+  text-align: left;
+}
+
+.loggedusermsg{
+  text-align: right;
+}
+
+.chatName{
+  position: relative;
+  /*border: 1px solid blue;*/
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.chatNameImg{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid rgb(255, 67, 67);
+}
+.chatNameImg img{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.chatName-name{
+  font-size: 1.4em;
+  margin-left: 10px;
+  line-height: 2.2;
 }

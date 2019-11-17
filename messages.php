@@ -161,8 +161,56 @@ if($_SESSION['logged_user'] != $username){
 
         </div>
 
+
+
+        <!-- CHAT -->
         <div class="col-9 messagesDiv">
-          Chat (scrollable)<br>
+          <div class="chatName">
+            <div class="chatNameImg">
+              <img src="images/images.jpg" alt="">
+            </div>
+
+            <span class="chatName-name">
+              Person 1
+            </span>
+          </div>
+
+
+          <div class="chatBox">
+            <!--message-->
+            <div class="message friendmsg">
+              <div class="msgtxtDivFriend msgFriend">woah hbru man bro bruh bruh bruhhhhhh  </div>
+            </div>
+
+            <!--message-->
+            <div class="message loggedusermsg">
+              <div class="msgtxtDivLoggedUser msgLoggedUser">woah hbru man bro bruh bruh bruhhhhhh  </div>
+            </div>
+
+            <!--message-->
+            <div class="message friendmsg">
+              <div class="msgtxtDivFriend msgFriend">yea  </div>
+            </div>
+
+            <!--message-->
+            <div class="message friendmsg">
+              <div class="msgtxtDivFriend msgFriend">woaruh bruhhhhhh  </div>
+            </div>
+
+            <!--message-->
+            <div class="message loggedusermsg">
+              <div class="msgtxtDivLoggedUser msgLoggedUser">hahahahhahhahha vro bnruhbruh</div>
+            </div>
+
+            <!--message-->
+            <div class="message loggedusermsg">
+              <div class="msgtxtDivLoggedUser msgLoggedUser">Bruh</div>
+            </div>
+          </div>
+
+
+
+
 
           <div class="messageInputFieldDiv">
             <input type="text" name="" value="" class="form-control messageInputField">
