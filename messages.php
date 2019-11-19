@@ -93,8 +93,6 @@ if($_SESSION['logged_user'] != $username){
       <div class="row messagesContainer">
 
         <div class="col-3 peopleDiv">
-          People (sakrit na 768px i stavit btn koji otvara to)<br>
-
           <!-- Person -->
           <div class="personContainer">
             <div class="personImg">

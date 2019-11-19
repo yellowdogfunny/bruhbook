@@ -24,6 +24,10 @@ if(isset($_GET['postId']) && isset($_GET['username'])){
     <link rel="icon" href="images/bruhbook_icon.ico" type="image/x-icon">
     <script>
       $(document).ready(function(){
+        $(".display").load("php/viewComments.php", {
+          com_post_id: <?php echo "'".$post_id."'"; ?>
+        });
+
         $("#post_comment_btn").on('click', function(){
           var comment_txt = $('#comment_txt').val();
 
@@ -32,13 +36,17 @@ if(isset($_GET['postId']) && isset($_GET['username'])){
               url: "php/comment.php",
               type: "POST",
               data: {
+                post_id: <?php echo "'".$post_id."'"; ?>, //dodano
                 comment_txt: comment_txt,
                 comment_post: <?php echo "'".$_GET["postId"]."'"; ?>,
                 comment_user: <?php echo "'".$_SESSION["logged_user"]."'"; ?>
               },
               success: function(data){
                 $("#comment_txt").val('');
-                window.location.reload(); //TODO: promjenit ovo da se nekako odma displejaju komentari a ne da se refresha 
+                //window.location.reload(); //TODO: promjenit ovo da se nekako odma displejaju komentari a ne da se refresha
+                $(".display").load("php/viewComments.php", {
+                  com_post_id: <?php echo "'".$post_id."'"; ?>
+                });
               }
             });
           }else{
@@ -46,6 +54,57 @@ if(isset($_GET['postId']) && isset($_GET['username'])){
             $("#comment_txt").css("box-shadow", "0px 1px 5px rgb(255, 67, 67)");
           }
         });
+
+        // Delete post
+        $("#deletePostBtn").on('click', function(){
+          $.ajax({
+            url: "php/deletePost.php",
+            type: "POST",
+            data: {
+              post_id: <?php echo "'".$_GET['postId']."'"; ?>,
+              post_user: <?php echo "'".$_GET['username']."'"; ?>
+            },
+            success: function(data){
+              //alert("Successfuly deleted");
+              $(".postDeletedOverlay").css("visibility", "visible");
+            }
+          });
+        });
+
+        // Edit post
+        $("#editPostBtn").on('click', function(){
+          $(".editPostDiv").css("display", "block");
+          $(".statusText").css("display", "none");
+        });
+
+        $("#cancelEditingPost").on('click', function(){
+          $(".editPostDiv").css("display", "none");
+          $(".statusText").css("display", "block");
+        });
+
+        $("#applyNewPost").on('click', function(){
+          var newPostTxt = $(".editPostTextArea").val();
+          if(newPostTxt != ""){
+            $.ajax({
+              url: "php/editPost.php",
+              type: "POST",
+              data: {
+                post_id: <?php echo "'".$_GET['postId']."'" ?>,
+                post_user: <?php echo "'".$_GET['username']."'" ?>,
+                newTxt: newPostTxt
+              },
+              success: function(data){
+                //alert("Edited! - " + newPostTxt);
+                $(".editPostDiv").css("display", "none");
+                $(".statusText").css("display", "block");
+                $(".statusText").html(newPostTxt);
+              }
+            });
+          }else{
+            alert("You left input field empty");
+          }
+        });
+
       });
 
 
@@ -106,10 +165,10 @@ if(isset($_GET['postId']) && isset($_GET['username'])){
       <div class="display">
 
         <?php
-
+        /*
           $comment = new Comment();
           $comment->showComments($_GET['postId']);
-
+        */
         ?>
       </div>
 

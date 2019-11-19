@@ -114,6 +114,7 @@ class Post extends Database{
           $post_date = $row['post_date'];
           ?>
           <div class="statusContainer" id="openModal2">
+
               <!-- User who posted a status -->
               <a href="profile.php?username=<?php echo $post_user; ?>">
                 <div class="userPostingContainer">
@@ -132,10 +133,10 @@ class Post extends Database{
                           ?>
                           <div class="d-e-btns">
                             <object>
-                              <a href="#">
+                              <a href="#" id="editPostBtn">
                                 <span><i class="fas fa-edit editBtn"></i></span>
                               </a>
-                              <a href="#">
+                              <a href="#" id="deletePostBtn">
                                 <span><i class="fas fa-trash-alt delBtn"></i></span>
                               </a>
                             </object>
@@ -169,11 +170,20 @@ class Post extends Database{
                 </div>
               </a>
               <hr>
+              <!-- edit post -->
+              <div class="editPostDiv" style="display:none;">
+                <textarea class="form-control editPostTextArea" placeholder="Edit post..." rows="3" maxlength="350"><?php echo $post_text; ?></textarea><br>
+                <button type="button" id="applyNewPost" name="button" class="btn btn-danger">Apply changes</button>
+                <button type="button" id="cancelEditingPost" name="button" class="btn btn-danger">Cancel</button>
+                <hr>
+              </div>
+
               <!-- da status -->
-              <div class="statusText">
-                  <?php echo $post_text; ?>
+              <div class="statusText" style="visibility:visible;">
+                <?php echo $post_text; ?>
               </div>
               <hr>
+
               <!-- status buttons -->
               <div class="statusButtonsContainer">
               <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
@@ -181,12 +191,20 @@ class Post extends Database{
               <span class="statusButton"><?php echo $post_date; ?></span>
 
               </div>
+              <div class="postDeletedOverlay"  style="visibility:hidden;">
+                <div class="postDeletedOverlayTxt">
+                  POST DELETED
+                </div>
+              </div>
           </div>
+
           <?php
         }
 
       }else{
-        header("Location: index.php");
+        echo "<div style='margin-top:20px;'>
+          <h2>Post does not exist</h2>
+        </div>";
       }
     }
 
@@ -207,6 +225,19 @@ class Post extends Database{
       $result = mysqli_query(Database::connect(), $sql_createPost);
     }
 
+
+    // Delete post
+    public function deletePost($post_id, $post_user){
+      $sql = "DELETE FROM posts_table WHERE post_id = '$post_id' AND post_user = '$post_user'";
+      $res = mysqli_query(Database::connect(), $sql);
+    }
+
+
+    // Edit post
+    public function editPost($post_id, $new_postTxt){
+      $sql = "UPDATE posts_table SET post_text = '$new_postTxt' WHERE post_id = '$post_id'";
+      $res = mysqli_query(Database::connect(), $sql);
+    }
 }
 
 if(isset($_POST['newNum']) || isset($_POST['from'])){
