@@ -12,14 +12,80 @@ if(isset($_SESSION['logged_user'])){
     <?php
       include "includes/head_tag-inc.php";
 
-      // from-all, from-logged_user, from-followers 
-      $from = "from-all";
+      // from-all, from-logged_user, from-followers
+      //$from = "from-all";
     ?>
 
     <link rel="icon" href="images/bruhbook_icon.ico" type="image/x-icon">
     <script>
 
       $(document).ready(function(){
+        var postNum = 5;
+        var postsFrom = "from-followers";
+
+        //po defaultu budu prikazani of followera postovi
+        $("#posts").load("php/showPosts.php", {
+          from: "from-followers"
+        });
+
+        $("#showFollowersBtn").on('click', function(){
+          postNum = 5;
+          postsFrom = "from-followers";
+          $.ajax({
+            url: "php/showPosts.php",
+            type: "POST",
+            data: {
+              from: "from-followers"
+            },
+            success: function(data){
+              //alert("Posts from followers");
+              $("#posts").load("php/showPosts.php", {
+                from: "from-followers"
+              });
+            }
+          });
+        });
+
+        $("#showAllBtn").on('click', function(){
+          postNum = 5;
+          postsFrom = "from-all";
+          $.ajax({
+            url: "php/showPosts.php",
+            type: "POST",
+            data: {
+              from: "from-all"
+            },
+            success: function(data){
+              //alert("Posts from everyone");
+              $("#posts").load("php/showPosts.php", {
+                from: "from-all"
+              });
+            }
+          });
+        });
+
+
+        $("#loadMoreButton").on('click', function(){
+          postNum = postNum + 5;
+          console.log(postNum);
+          $.ajax({
+            url: "php/showPosts.php",
+            type: "POST",
+            data: {
+              newNum: postNum
+            },
+            success: function(data){
+              //alert("Number of posts: " + postNum);
+              $("#posts").load("php/showPosts.php", {
+                newNum: postNum,
+                from: postsFrom
+              });
+            }
+          });
+        });
+
+      });
+/*
         var postNum = 5;
         var newNum = 0;
         var from;
@@ -28,10 +94,11 @@ if(isset($_SESSION['logged_user'])){
           console.log(postNum);
           $("#posts").load("classes/post.class.php", {
             newNum : postNum,
-            from : "<?php echo $from; ?>"
+            from : "<?php //echo $from; ?>"
           });
         });
-      });
+*/
+
 
     </script>
     <title>Bruhbook</title>
@@ -77,18 +144,24 @@ if(isset($_SESSION['logged_user'])){
       <!-- Header 2 container -->
       <div class="partHeader">
         Newsfeed -
+        <!--
         <select class="" name="">
           <option id="showFollowersBtn">Followers</option>
           <option id="showAllBtn">All</option>
         </select>
+        -->
+        <button type="button" id="showFollowersBtn">Followers</button>
+        <button type="button" id="showAllBtn">All</button>
       </div>
 
       <!-- POSTS -->
       <div id="posts">
-        <?php
 
+        <?php
+/*
           $post = new Post();
           $post->getPosts($from);
+*/
         ?>
       </div>
 

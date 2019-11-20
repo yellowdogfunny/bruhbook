@@ -2,11 +2,12 @@
 //session_start();
 require_once("database.class.php");
 require_once("user.class.php");
-if(!isset($_SESSION)) { 
+if(!isset($_SESSION)) {
   session_start();
 }
 class Post extends Database{
 
+/*
     public $numPosts;
     //ajax thing (load more system), posalje post variablu "newNum"
     public function __construct(){
@@ -16,87 +17,95 @@ class Post extends Database{
         $this->numPosts = 5;
       }
     }
+*/
 
     // Show all posts or posts from currently logged in user
     //   (from-all  /  from-logged_user / from-followers /username)
-    public function getPosts($from){
+    public function getPosts($from, $numPosts){
 
         $user = new User();
 
         if($from == "from-all"){
-            $sql = "SELECT * FROM posts_table ORDER BY post_id DESC LIMIT $this->numPosts";
+            $sql = "SELECT * FROM posts_table ORDER BY post_id DESC LIMIT $numPosts";
         }else if($from == "from-logged_user"){
-            $sql = "SELECT * FROM posts_table WHERE post_user = '".$_SESSION['logged_user']."' ORDER BY post_id DESC LIMIT $this->numPosts";
+            $sql = "SELECT * FROM posts_table WHERE post_user = '".$_SESSION['logged_user']."' ORDER BY post_id DESC LIMIT $numPosts";
         }else if($from == "from-followers"){
-            $sql = "SELECT * FROM posts_table, follow_table WHERE posts_table.post_user = follow_table.follow_receiver AND follow_sender = '".$_SESSION['logged_user']."' ORDER BY post_id DESC LIMIT $this->numPosts";
+            $sql = "SELECT * FROM posts_table, follow_table WHERE posts_table.post_user = follow_table.follow_receiver AND follow_sender = '".$_SESSION['logged_user']."' ORDER BY post_id DESC LIMIT $numPosts";
         }else{
-          $sql = "SELECT * FROM posts_table WHERE post_user = '$from' ORDER BY post_id DESC LIMIT $this->numPosts";
+          $sql = "SELECT * FROM posts_table WHERE post_user = '$from' ORDER BY post_id DESC LIMIT $numPosts";
         }
         $res = mysqli_query(Database::connect(), $sql);
-        while($row = mysqli_fetch_array($res)){
-            $post_id = $row['post_id'];
-            $post_user = $row['post_user'];
-            $post_text = $row['post_text'];
-            $post_img = $row['post_img'];
-            $post_likes = $row['post_likes'];
-            $post_numComments = $row['post_numComments'];
-            $post_date = $row['post_date'];
-            ?>
+        if(mysqli_num_rows($res) > 0){
+          while($row = mysqli_fetch_array($res)){
+              $post_id = $row['post_id'];
+              $post_user = $row['post_user'];
+              $post_text = $row['post_text'];
+              $post_img = $row['post_img'];
+              $post_likes = $row['post_likes'];
+              $post_numComments = $row['post_numComments'];
+              $post_date = $row['post_date'];
+              ?>
 
-            <!-- Status container -->
-            <a href="view_post.php?postId=<?php echo $post_id; ?>&username=<?php echo $post_user; ?>" class="postLink">
-              <div class="statusContainer" id="openModal2">
-                  <!-- User who posted a status -->
-                  <object> <!-- nested link sulution -->
-                    <a href="profile.php?username=<?php echo $post_user; ?>">
-                      <div class="userPostingContainer">
-                        <div class="userPostingImg">
-                            <img src="<?php echo $user->getUserData($post_user, "user_img"); ?>" alt="">
+              <!-- Status container -->
+              <a href="view_post.php?postId=<?php echo $post_id; ?>&username=<?php echo $post_user; ?>" class="postLink">
+                <div class="statusContainer" id="openModal2">
+                    <!-- User who posted a status -->
+                    <object> <!-- nested link sulution -->
+                      <a href="profile.php?username=<?php echo $post_user; ?>">
+                        <div class="userPostingContainer">
+                          <div class="userPostingImg">
+                              <img src="<?php echo $user->getUserData($post_user, "user_img"); ?>" alt="">
+                          </div>
+
+                          <div class="userPostingUsername">
+                              <span class="color_username newsfeed_username"><?php echo $post_user; ?></span>
+                              &nbsp;
+                              <!--
+                              <span><i class="fas fa-check-circle"></i></span>
+                              -->
+                              &nbsp;
+                              <br>
+
+                              <div class="edit_delete_btn_div">
+                              <!--
+                              <span><i class="fas fa-edit"></i></span>
+                              <span><i class="fas fa-trash-alt"></i></span>
+                              -->
+                              </div>
+                          </div>
                         </div>
+                      </a>
+                    </object>
 
-                        <div class="userPostingUsername">
-                            <span class="color_username newsfeed_username"><?php echo $post_user; ?></span>
-                            &nbsp;
-                            <!--
-                            <span><i class="fas fa-check-circle"></i></span>
-                            -->
-                            &nbsp;
-                            <br>
+                    <hr>
 
-                            <div class="edit_delete_btn_div">
-                            <!--
-                            <span><i class="fas fa-edit"></i></span>
-                            <span><i class="fas fa-trash-alt"></i></span>
-                            -->
-                            </div>
-                        </div>
-                      </div>
-                    </a>
-                  </object>
+                    <!-- da status -->
+                    <div class="statusText">
+                        <?php echo $post_text; ?>
+                    </div>
 
-                  <hr>
+                    <hr>
 
-                  <!-- da status -->
-                  <div class="statusText">
-                      <?php echo $post_text; ?>
-                  </div>
+                    <!-- status buttons -->
+                    <div class="statusButtonsContainer">
+                      <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
+                      <span class="statusButton commentButton"> 0 &nbsp; <i class="far fa-comment"></i></span>
+                      <span class="statusButton"><?php echo $post_date; ?></span>
 
-                  <hr>
+                    </div>
 
-                  <!-- status buttons -->
-                  <div class="statusButtonsContainer">
-                    <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
-                    <span class="statusButton commentButton"> 0 &nbsp; <i class="far fa-comment"></i></span>
-                    <span class="statusButton"><?php echo $post_date; ?></span>
-
-                  </div>
-
-              </div>
-            </a>
+                </div>
+              </a>
 
 
-            <?php
+              <?php
+          }
+        }else{
+          echo "<div style='margin-top:20px;'>
+            <h2>No posts yet... try following other people to see their posts</h2>
+          </div>";
         }
+
     }
 
 
@@ -245,7 +254,9 @@ class Post extends Database{
     }
 }
 
-if(isset($_POST['newNum']) || isset($_POST['from'])){
-  $obj = new Post();
-  $obj->getPosts($_POST['from']);
-}
+/*
+  if(isset($_POST['newNum']) || isset($_POST['from'])){
+    $obj = new Post();
+    $obj->getPosts($_POST['from']);
+  }
+*/
