@@ -2,7 +2,9 @@
 //session_start();
 require_once("database.class.php");
 require_once("user.class.php");
-
+if(!isset($_SESSION)) { 
+  session_start();
+}
 class Post extends Database{
 
     public $numPosts;
@@ -16,14 +18,17 @@ class Post extends Database{
     }
 
     // Show all posts or posts from currently logged in user
-    public function getPosts($from){ //   (from-all  /  from-logged_user / username)
+    //   (from-all  /  from-logged_user / from-followers /username)
+    public function getPosts($from){
 
         $user = new User();
-        //TODO: dodat jos jedan else if u kojem ce bit od followera content
+
         if($from == "from-all"){
             $sql = "SELECT * FROM posts_table ORDER BY post_id DESC LIMIT $this->numPosts";
         }else if($from == "from-logged_user"){
             $sql = "SELECT * FROM posts_table WHERE post_user = '".$_SESSION['logged_user']."' ORDER BY post_id DESC LIMIT $this->numPosts";
+        }else if($from == "from-followers"){
+            $sql = "SELECT * FROM posts_table, follow_table WHERE posts_table.post_user = follow_table.follow_receiver AND follow_sender = '".$_SESSION['logged_user']."' ORDER BY post_id DESC LIMIT $this->numPosts";
         }else{
           $sql = "SELECT * FROM posts_table WHERE post_user = '$from' ORDER BY post_id DESC LIMIT $this->numPosts";
         }

@@ -14,3 +14,6 @@
 <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/83dfe2e2a2.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/style.css">
+
+<!-- loads fontawesome faster -->
+<script type="text/javascript"> (function() { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>

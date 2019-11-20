@@ -12,7 +12,7 @@ if(isset($_SESSION['logged_user'])){
     <?php
       include "includes/head_tag-inc.php";
 
-      // from-all, from-logged_user
+      // from-all, from-logged_user, from-followers 
       $from = "from-all";
     ?>
 
@@ -76,7 +76,11 @@ if(isset($_SESSION['logged_user'])){
       <hr>
       <!-- Header 2 container -->
       <div class="partHeader">
-        Newsfeed - all
+        Newsfeed -
+        <select class="" name="">
+          <option id="showFollowersBtn">Followers</option>
+          <option id="showAllBtn">All</option>
+        </select>
       </div>
 
       <!-- POSTS -->
