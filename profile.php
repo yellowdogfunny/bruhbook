@@ -28,8 +28,34 @@ if($_SESSION['logged_user'] != $username){
 
     <script>
     $(document).ready(function(){
+      var postNum = 5;
+      var postsFrom = <?php echo "'".$username."'"; ?>;
+
+      $("#posts").load("php/showPosts.php", {
+        from: <?php echo "'".$username."'"; ?>
+      });
+
+      $("#loadMoreButton").on('click', function(){
+        postNum = postNum + 5;
+        console.log(postNum);
+        $.ajax({
+          url: "php/showPosts.php",
+          type: "POST",
+          data: {
+            newNum: postNum
+          },
+          success: function(data){
+            //alert("Number of posts: " + postNum);
+            $("#posts").load("php/showPosts.php", {
+              newNum: postNum,
+              from: postsFrom
+            });
+          }
+        });
+      });
 
       //Load more
+/*
       var postNum = 5;
       var newNum = 0;
       var from;
@@ -38,10 +64,10 @@ if($_SESSION['logged_user'] != $username){
         console.log(postNum);
         $("#posts").load("classes/post.class.php", {
           newNum : postNum,
-          from : "<?php echo $username; ?>"
+          from : "<?php //echo $username; ?>"
         });
       });
-
+*/
       //Follow
       $("#followButton").click(function(){
         $.ajax({
@@ -213,8 +239,10 @@ if($_SESSION['logged_user'] != $username){
       <div class="posts" id="posts">
         <!-- POSTS -->
         <?php
+        /*
           $post = new Post();
           $post->getPosts($username);
+        */
         ?>
       </div>
 
