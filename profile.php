@@ -173,11 +173,7 @@ if($_SESSION['logged_user'] != $username){
                 $fBtn->followBtn($_SESSION['logged_user'], $_GET['username']);
 
                 ?>
-                <!--
-                <form class="" action="" method="">
-                  <button type="button" name="follow" class="btn btn-danger flwBtn" id="followButton">Follow</button>
-                </form>
-                -->
+
                 <br />
 
                 <?php

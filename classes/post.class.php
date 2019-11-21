@@ -30,11 +30,17 @@ class Post extends Database{
         }else if($from == "from-logged_user"){
             $sql = "SELECT * FROM posts_table WHERE post_user = '".$_SESSION['logged_user']."' ORDER BY post_id DESC LIMIT $numPosts";
         }else if($from == "from-followers"){
-
-          $sql = "SELECT * FROM posts_table, follow_table
-          WHERE posts_table.post_user = follow_table.follow_receiver
-          AND follow_sender = '".$_SESSION['logged_user']."'
-          ORDER BY post_id DESC LIMIT $numPosts";
+          //shows posts from followers AND logged user
+          $sql = "SELECT * FROM posts_table
+                  WHERE post_user IN (
+                      SELECT follow_receiver
+                      FROM follow_table
+                      WHERE
+                      follow_sender = '".$_SESSION['logged_user']."'
+                      OR
+                      follow_receiver = '".$_SESSION['logged_user']."'
+                  )
+                  ORDER BY post_id DESC LIMIT $numPosts";
 
         }else{
           $sql = "SELECT * FROM posts_table WHERE post_user = '$from' ORDER BY post_id DESC LIMIT $numPosts";
