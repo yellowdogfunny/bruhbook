@@ -2,6 +2,7 @@
 //session_start();
 require_once("database.class.php");
 require_once("user.class.php");
+require_once("comment.class.php");
 if(!isset($_SESSION)) {
   session_start();
 }
@@ -24,6 +25,7 @@ class Post extends Database{
     public function getPosts($from, $numPosts){
 
         $user = new User();
+        $comment = new Comment();
 
         if($from == "from-all"){
             $sql = "SELECT * FROM posts_table ORDER BY post_id DESC LIMIT $numPosts";
@@ -100,7 +102,7 @@ class Post extends Database{
                     <!-- status buttons -->
                     <div class="statusButtonsContainer">
                       <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
-                      <span class="statusButton commentButton"> 0 &nbsp; <i class="far fa-comment"></i></span>
+                      <span class="statusButton commentButton"> <?php $comment->numComments($post_id); ?> &nbsp; <i class="far fa-comment"></i></span>
                       <span class="statusButton"><?php echo $post_date; ?></span>
 
                     </div>
@@ -124,6 +126,8 @@ class Post extends Database{
 
     //Get specific post
     public function getSinglePost($postid, $postuser){
+      $comment = new Comment();
+      
       $sql_getsp = "SELECT * FROM posts_table WHERE post_id = '$postid' AND post_user = '$postuser'";
       $result = mysqli_query(Database::connect(), $sql_getsp);
       $spCount = mysqli_num_rows($result);
@@ -212,7 +216,7 @@ class Post extends Database{
               <!-- status buttons -->
               <div class="statusButtonsContainer">
               <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
-              <span class="statusButton commentButton"> 0 &nbsp; <i class="far fa-comment"></i></span>
+              <span class="statusButton commentButton"> <?php $comment->numComments($post_id); ?> &nbsp; <i class="far fa-comment"></i></span>
               <span class="statusButton"><?php echo $post_date; ?></span>
 
               </div>

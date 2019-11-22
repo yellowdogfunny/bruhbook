@@ -62,6 +62,18 @@ class Comment extends Database{
     }
   }
 
+
+  //display number of comments
+  public function numComments($post_id){
+    $sql = "SELECT * FROM comments_table WHERE comment_post = '$post_id'";
+    $res = mysqli_query(Database::connect(), $sql);
+    if(mysqli_num_rows($res) > 0){
+      echo mysqli_num_rows($res);
+    }else{
+      echo "0";
+    }
+  }
+
 }
 
 ?>

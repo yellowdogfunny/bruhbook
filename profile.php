@@ -68,6 +68,7 @@ if($_SESSION['logged_user'] != $username){
         });
       });
 */
+
       //Follow
       $("#followButton").click(function(){
         $.ajax({
@@ -78,13 +79,16 @@ if($_SESSION['logged_user'] != $username){
             followReceiver: <?php echo "'".$_GET['username']."'"; ?>
           },
           success: function(data){
-            window.location.reload(); //TODO: napravit da se ne mora refreshat
+            //window.location.reload(); //TODO: napravit da se ne mora refreshat
+
+            alert("You are now following this person");
           }
         });
       });
 
       //Unfollow
       $("#unFollowButton").click(function(){
+        //alert("clicked unfollow bnutton");
         $.ajax({
           //url: "php/follow.php",
           type: "POST",
@@ -93,7 +97,8 @@ if($_SESSION['logged_user'] != $username){
             followReceiver: <?php echo "'".$_GET['username']."'"; ?>
           },
           success: function(data){
-            window.location.reload(); //TODO: napravit da se ne mora refreshat
+            //window.location.reload(); //TODO: napravit da se ne mora refreshat
+            alert("You are not following this person anymore");
           }
         });
       });
@@ -158,8 +163,12 @@ if($_SESSION['logged_user'] != $username){
           </div>
 
           <div class="col-12 col-md-6 profile_user-info">
+            <span id="follow_unfollow_button">
+              <!-- here goes da button -->
+            </span>
 
             <?php
+
               if($_GET['username'] != $_SESSION['logged_user']){
                 if(isset($_POST['followSender']) && isset($_POST['followReceiver'])){
                   $sender = $_POST['followSender'];
@@ -179,6 +188,7 @@ if($_SESSION['logged_user'] != $username){
                 <?php
 
               }
+
             ?>
 
             <table>

@@ -1101,3 +1101,17 @@ body{
 #cancelEditingPost:hover{
   background-color: rgb(255, 90, 90);
 }
+
+#showFollowersBtn, #showAllBtn{
+  color: white;
+  margin-left: 1rem;
+  background-color: rgb(255, 90, 90);
+  border: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+}
+
+#showFollowersBtn:hover, #showAllBtn:hover{
+  text-decoration: underline;
+}

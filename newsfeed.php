@@ -28,6 +28,8 @@ if(isset($_SESSION['logged_user'])){
           from: "from-followers"
         });
 
+        $("#showFollowersBtn").css("font-weight", "1000");
+
         $("#showFollowersBtn").on('click', function(){
           postNum = 5;
           postsFrom = "from-followers";
@@ -42,6 +44,9 @@ if(isset($_SESSION['logged_user'])){
               $("#posts").load("php/showPosts.php", {
                 from: "from-followers"
               });
+
+              $("#showAllBtn").css("font-weight", "500");
+              $("#showFollowersBtn").css("font-weight", "1000");
             }
           });
         });
@@ -60,6 +65,9 @@ if(isset($_SESSION['logged_user'])){
               $("#posts").load("php/showPosts.php", {
                 from: "from-all"
               });
+
+              $("#showAllBtn").css("font-weight", "1000");
+              $("#showFollowersBtn").css("font-weight", "500");
             }
           });
         });
@@ -83,6 +91,27 @@ if(isset($_SESSION['logged_user'])){
             }
           });
         });
+
+
+        $("#post_btn").on('click', function(){
+          $.ajax({
+            url: "php/create-post.php",
+            type: "GET",
+            data: {
+              post_button: "post_button",
+              post_content: $("#post_content").val()
+            },
+            success: function(data){
+              //alert("Successfuly posted!");
+              $("#posts").load("php/showPosts.php", {
+                newNum: postNum,
+                from: postsFrom
+              });
+
+              $("#post_content").val("");
+            }
+          });
+        })
 
       });
 /*
@@ -110,12 +139,12 @@ if(isset($_SESSION['logged_user'])){
 
       <!-- Post a status container -->
       <div class="postStatusContainer">
-        <form class="" action="php/create-post.php" method="GET">
+        <form class="" action="" method="">
           <div class="row">
 
             <div class="col-12 col-md-9 column_nopadding">
               <div class="form-group">
-                <textarea class="form-control postStatusTextarea" placeholder="Post a status..." rows="3" maxlength="350" name="post_content"></textarea>
+                <textarea class="form-control postStatusTextarea" placeholder="Post a status..." rows="3" maxlength="350" name="post_content" id="post_content"></textarea>
               </div>
             </div>
 
@@ -131,7 +160,7 @@ if(isset($_SESSION['logged_user'])){
                 </div>
 
                 <div class="col-4 col-md-12  column_nopadding">
-                  <input type="submit" class="btn btn-danger postStatusButtons" name="post_button" value="Post">
+                  <button type="button" class="btn btn-danger postStatusButtons" id="post_btn">Post</button>
                 </div>
               </div>
             </div>
@@ -150,8 +179,9 @@ if(isset($_SESSION['logged_user'])){
           <option id="showAllBtn">All</option>
         </select>
         -->
-        <button type="button" id="showFollowersBtn">Followers</button>
-        <button type="button" id="showAllBtn">All</button>
+        Show posts from:
+        <button id="showFollowersBtn">Followers</button>
+        <button id="showAllBtn">Everyone</button>
       </div>
 
       <!-- POSTS -->
