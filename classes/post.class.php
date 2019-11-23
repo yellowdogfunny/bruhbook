@@ -3,6 +3,7 @@
 require_once("database.class.php");
 require_once("user.class.php");
 require_once("comment.class.php");
+require_once("like.class.php");
 if(!isset($_SESSION)) {
   session_start();
 }
@@ -23,9 +24,9 @@ class Post extends Database{
     // Show all posts or posts from currently logged in user
     //   (from-all  /  from-logged_user / from-followers /username)
     public function getPosts($from, $numPosts){
-
         $user = new User();
         $comment = new Comment();
+        $like = new Like();
 
         if($from == "from-all"){
             $sql = "SELECT * FROM posts_table ORDER BY post_id DESC LIMIT $numPosts";
@@ -97,22 +98,83 @@ class Post extends Database{
                         <?php echo $post_text; ?>
                     </div>
 
-                    <hr>
 
+                    <hr>
+                </a>
                     <!-- status buttons -->
                     <div class="statusButtonsContainer">
-                      <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
+
+                      <span id="numberOfLikes_p<?php echo $post_id; ?>" class="nLikes">
+                        <?php
+                          $like->numLikes($post_id);
+                        ?>
+                      </span>
+                      <!-- like button -->
+                      <button id="likeBtn_<?php echo $post_id; ?>" class="likeBtn">
+
+                        <?php
+                        $like->likeBtn($_SESSION['logged_user'], $post_id);
+                        /*
+                          $sql_btn = "SELECT * FROM likes_table WHERE like_user = '".$_SESSION['logged_user']."' AND like_post = '$post_id'";
+
+                          $res_btn = mysqli_query(Database::connect(), $sql_btn);
+                          if(mysqli_num_rows($res_btn) > 0){
+                            ?>
+                            <i class="fas fa-heart"></i>
+                            <?php
+                          }else{
+                            ?>
+                            <i class="far fa-heart"></i>
+                            <?php
+                          }*
+                        */
+                        ?>
+                        <!-- <i class="far fa-heart"></i> -->
+                        <!-- <i class="fas fa-heart"></i> -->
+                      </button>
+
                       <span class="statusButton commentButton"> <?php $comment->numComments($post_id); ?> &nbsp; <i class="far fa-comment"></i></span>
                       <span class="statusButton"><?php echo $post_date; ?></span>
 
                     </div>
 
                 </div>
-              </a>
+                <script>
 
+                  $("#likeBtn_<?php echo $post_id; ?>").on('click', function(){
+                    //alert("Clicked like button <?php //echo $post_id; ?>");
+                    $.ajax({
+                      url: "php/like.php",
+                      type: "POST",
+                      data: {
+                        like_post: <?php echo $post_id; ?>,
+                        like_user: <?php echo "'".$_SESSION['logged_user']."'"; ?>
+
+                      },
+                      success: function(data){
+                        //alert("Post [<?php echo $post_id; ?>] liked!");
+
+                        // number of likes after clicking like btn
+                        $("#numberOfLikes_p<?php echo $post_id; ?>").load("php/numLikes.php", {
+                          id: <?php echo "'".$post_id."'"; ?>
+                        });
+
+                        //altering like and dislike button
+                        $("#likeBtn_<?php echo $post_id; ?>").load("php/likebtn.php", {
+                          user: <?php echo "'".$_SESSION['logged_user']."'"; ?>,
+                          post: <?php echo $post_id; ?>
+                        });
+                      }
+                    });
+                  });
+
+                </script>
 
               <?php
           }
+          ?>
+
+          <?php
         }else{
           echo "<div style='margin-top:20px;'>
             <h2>No posts yet... try following other people to see their posts</h2>
@@ -127,7 +189,7 @@ class Post extends Database{
     //Get specific post
     public function getSinglePost($postid, $postuser){
       $comment = new Comment();
-      
+
       $sql_getsp = "SELECT * FROM posts_table WHERE post_id = '$postid' AND post_user = '$postuser'";
       $result = mysqli_query(Database::connect(), $sql_getsp);
       $spCount = mysqli_num_rows($result);

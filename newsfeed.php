@@ -93,6 +93,7 @@ if(isset($_SESSION['logged_user'])){
         });
 
 
+        //Post a status
         $("#post_btn").on('click', function(){
           $.ajax({
             url: "php/create-post.php",
@@ -111,7 +112,7 @@ if(isset($_SESSION['logged_user'])){
               $("#post_content").val("");
             }
           });
-        })
+        });
 
       });
 /*
