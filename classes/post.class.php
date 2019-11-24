@@ -113,24 +113,10 @@ class Post extends Database{
                       <button id="likeBtn_<?php echo $post_id; ?>" class="likeBtn">
 
                         <?php
+                        //like / dislike button
                         $like->likeBtn($_SESSION['logged_user'], $post_id);
-                        /*
-                          $sql_btn = "SELECT * FROM likes_table WHERE like_user = '".$_SESSION['logged_user']."' AND like_post = '$post_id'";
-
-                          $res_btn = mysqli_query(Database::connect(), $sql_btn);
-                          if(mysqli_num_rows($res_btn) > 0){
-                            ?>
-                            <i class="fas fa-heart"></i>
-                            <?php
-                          }else{
-                            ?>
-                            <i class="far fa-heart"></i>
-                            <?php
-                          }*
-                        */
                         ?>
-                        <!-- <i class="far fa-heart"></i> -->
-                        <!-- <i class="fas fa-heart"></i> -->
+
                       </button>
 
                       <span class="statusButton commentButton"> <?php $comment->numComments($post_id); ?> &nbsp; <i class="far fa-comment"></i></span>
@@ -189,7 +175,7 @@ class Post extends Database{
     //Get specific post
     public function getSinglePost($postid, $postuser){
       $comment = new Comment();
-
+      $like = new Like();
       $sql_getsp = "SELECT * FROM posts_table WHERE post_id = '$postid' AND post_user = '$postuser'";
       $result = mysqli_query(Database::connect(), $sql_getsp);
       $spCount = mysqli_num_rows($result);
@@ -276,18 +262,60 @@ class Post extends Database{
               <hr>
 
               <!-- status buttons -->
+              <!-- status buttons -->
               <div class="statusButtonsContainer">
-              <span class="statusButton likeButton"> 0 &nbsp; <i class="fas fa-heart"></i></span>
-              <span class="statusButton commentButton"> <?php $comment->numComments($post_id); ?> &nbsp; <i class="far fa-comment"></i></span>
-              <span class="statusButton"><?php echo $post_date; ?></span>
+
+                <span id="numberOfLikes_p<?php echo $post_id; ?>" class="nLikes">
+                  <?php
+                    $like->numLikes($post_id);
+                  ?>
+                </span>
+                <!-- like button -->
+                <button id="likeBtn_<?php echo $post_id; ?>" class="likeBtn">
+
+                  <?php
+                  //like / dislike button
+                  $like->likeBtn($_SESSION['logged_user'], $post_id);
+                  ?>
+
+                </button>
+
+                <span class="statusButton commentButton"> <?php $comment->numComments($post_id); ?> &nbsp; <i class="far fa-comment"></i></span>
+                <span class="statusButton"><?php echo $post_date; ?></span>
 
               </div>
-              <div class="postDeletedOverlay"  style="visibility:hidden;">
-                <div class="postDeletedOverlayTxt">
-                  POST DELETED
-                </div>
-              </div>
+
           </div>
+          <script>
+
+            $("#likeBtn_<?php echo $post_id; ?>").on('click', function(){
+              //alert("Clicked like button <?php //echo $post_id; ?>");
+              $.ajax({
+                url: "php/like.php",
+                type: "POST",
+                data: {
+                  like_post: <?php echo $post_id; ?>,
+                  like_user: <?php echo "'".$_SESSION['logged_user']."'"; ?>
+
+                },
+                success: function(data){
+                  //alert("Post [<?php echo $post_id; ?>] liked!");
+
+                  // number of likes after clicking like btn
+                  $("#numberOfLikes_p<?php echo $post_id; ?>").load("php/numLikes.php", {
+                    id: <?php echo "'".$post_id."'"; ?>
+                  });
+
+                  //altering like and dislike button
+                  $("#likeBtn_<?php echo $post_id; ?>").load("php/likebtn.php", {
+                    user: <?php echo "'".$_SESSION['logged_user']."'"; ?>,
+                    post: <?php echo $post_id; ?>
+                  });
+                }
+              });
+            });
+
+          </script>
 
           <?php
         }

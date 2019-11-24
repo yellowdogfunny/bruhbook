@@ -72,7 +72,7 @@ if($_SESSION['logged_user'] != $username){
       //Follow
       $("#followButton").click(function(){
         $.ajax({
-          //url: "php/follow.php",
+          url: "php/follow.php",
           type: "POST",
           data: {
             followSender: <?php echo "'".$_SESSION['logged_user']."'"; ?>,
@@ -81,20 +81,27 @@ if($_SESSION['logged_user'] != $username){
           success: function(data){
             //window.location.reload(); //TODO: napravit da se ne mora refreshat
 
-            alert("You are now following this person");
+            //alert("You are now following this person");
+
+            $("#followButton").load("php/followBtn.php", {
+              followSender: <?php echo "'".$_SESSION['logged_user']."'"; ?>,
+              followReceiver: <?php echo "'".$_GET['username']."'"; ?>
+            });
+
           }
         });
       });
 
       //Unfollow
+      /*
       $("#unFollowButton").click(function(){
         //alert("clicked unfollow bnutton");
         $.ajax({
           //url: "php/follow.php",
           type: "POST",
           data: {
-            followSender: <?php echo "'".$_SESSION['logged_user']."'"; ?>,
-            followReceiver: <?php echo "'".$_GET['username']."'"; ?>
+            followSender: <?php //echo "'".$_SESSION['logged_user']."'"; ?>,
+            followReceiver: <?php //echo "'".$_GET['username']."'"; ?>
           },
           success: function(data){
             //window.location.reload(); //TODO: napravit da se ne mora refreshat
@@ -102,6 +109,7 @@ if($_SESSION['logged_user'] != $username){
           }
         });
       });
+      */
 
     });
 
@@ -165,31 +173,21 @@ if($_SESSION['logged_user'] != $username){
           <div class="col-12 col-md-6 profile_user-info">
             <span id="follow_unfollow_button">
               <!-- here goes da button -->
-            </span>
+              <button type="button" name="follow" class="btn btn-danger unFlwBtn" id="followButton">
 
-            <?php
-
-              if($_GET['username'] != $_SESSION['logged_user']){
-                if(isset($_POST['followSender']) && isset($_POST['followReceiver'])){
-                  $sender = $_POST['followSender'];
-                  $receiver = $_POST['followReceiver'];
-
-                  $follow = new Follow();
-                  $follow->follow_function($sender, $receiver);
+                <?php
+                if($_GET['username'] != $_SESSION['logged_user']){
+                  $fBtn = new Follow();
+                  $fBtn->followBtn($_SESSION['logged_user'], $_GET['username']);
                 }
-
-                $fBtn = new Follow();
-                $fBtn->followBtn($_SESSION['logged_user'], $_GET['username']);
 
                 ?>
 
-                <br />
+              </button>
 
-                <?php
+            </span>
 
-              }
-
-            ?>
+            <br />
 
             <table>
               <?php echo " <h2>$username</h2><br /> "; ?>

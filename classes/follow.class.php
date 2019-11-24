@@ -29,15 +29,11 @@ class Follow extends Database{
     $res_c = mysqli_query(Database::connect(), $sql_c);
     if(mysqli_num_rows($res_c) > 0){
       ?>
-      <form class="" action="" method="">
-        <button type="button" name="follow" class="btn btn-danger unFlwBtn" id="unFollowButton">Following</button>
-      </form>
+      <span class="follow_ufbtn">Unfollow</span>
       <?php
     }else{
       ?>
-      <form class="" action="" method="">
-        <button type="button" name="follow" class="btn btn-danger flwBtn" id="followButton">Follow</button>
-      </form>
+      <span class="follow_fbtn">Follow</span>
       <?php
     }
   }

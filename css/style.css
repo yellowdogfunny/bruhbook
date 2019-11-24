@@ -1135,3 +1135,48 @@ body{
   font-size: 1.2em;
   margin-right: 5px;
 }
+
+#followButton{
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 1.2em;
+  /*color: rgb(255, 67, 67);*/
+  /*border: 2px solid rgb(255, 100, 100);*/
+  /*padding: 5px;*/
+  margin-bottom: 10px;
+}
+#followButton:focus{
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.follow_ufbtn{
+  color:white;
+  padding-top:5px;
+  padding-bottom:5px;
+  padding-left:10px;
+  padding-right:10px;
+  background-color:rgb(255, 67, 67);
+  border-radius:10px;
+  transition: 0.2s;
+}
+.follow_fbtn{
+  color:rgb(255, 67, 67);
+  padding-top:5px;
+  padding-bottom:5px;
+  padding-left:10px;
+  padding-right:10px;
+  background-color:none;
+  border-radius:10px;
+  border:2px solid rgb(255, 67, 67);
+  transition: 0.2s;
+}
+
+.follow_ufbtn:hover, .follow_fbtn:hover{
+  filter: brightness(1.5);
+}
