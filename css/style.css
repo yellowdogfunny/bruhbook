@@ -1180,3 +1180,7 @@ body{
 .follow_ufbtn:hover, .follow_fbtn:hover{
   filter: brightness(1.5);
 }
+
+.chooseFile{
+  
+}

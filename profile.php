@@ -28,13 +28,18 @@ if($_SESSION['logged_user'] != $username){
 
     <script>
     $(document).ready(function(){
+      //number of posts to show
       var postNum = 5;
+
+      //display posts from someone
       var postsFrom = <?php echo "'".$username."'"; ?>;
 
+      //load posts
       $("#posts").load("php/showPosts.php", {
         from: <?php echo "'".$username."'"; ?>
       });
 
+      // load more posts
       $("#loadMoreButton").on('click', function(){
         postNum = postNum + 5;
         console.log(postNum);
@@ -54,21 +59,6 @@ if($_SESSION['logged_user'] != $username){
         });
       });
 
-      //Load more
-/*
-      var postNum = 5;
-      var newNum = 0;
-      var from;
-      $("#loadMoreButton").click(function(){
-        postNum = postNum + 5;
-        console.log(postNum);
-        $("#posts").load("classes/post.class.php", {
-          newNum : postNum,
-          from : "<?php //echo $username; ?>"
-        });
-      });
-*/
-
       //Follow
       $("#followButton").click(function(){
         $.ajax({
@@ -87,29 +77,9 @@ if($_SESSION['logged_user'] != $username){
               followSender: <?php echo "'".$_SESSION['logged_user']."'"; ?>,
               followReceiver: <?php echo "'".$_GET['username']."'"; ?>
             });
-
           }
         });
       });
-
-      //Unfollow
-      /*
-      $("#unFollowButton").click(function(){
-        //alert("clicked unfollow bnutton");
-        $.ajax({
-          //url: "php/follow.php",
-          type: "POST",
-          data: {
-            followSender: <?php //echo "'".$_SESSION['logged_user']."'"; ?>,
-            followReceiver: <?php //echo "'".$_GET['username']."'"; ?>
-          },
-          success: function(data){
-            //window.location.reload(); //TODO: napravit da se ne mora refreshat
-            alert("You are not following this person anymore");
-          }
-        });
-      });
-      */
 
     });
 
@@ -174,17 +144,13 @@ if($_SESSION['logged_user'] != $username){
             <span id="follow_unfollow_button">
               <!-- here goes da button -->
               <button type="button" name="follow" class="btn btn-danger unFlwBtn" id="followButton">
-
                 <?php
                 if($_GET['username'] != $_SESSION['logged_user']){
                   $fBtn = new Follow();
                   $fBtn->followBtn($_SESSION['logged_user'], $_GET['username']);
                 }
-
                 ?>
-
               </button>
-
             </span>
 
             <br />
@@ -197,7 +163,6 @@ if($_SESSION['logged_user'] != $username){
                   <?php echo $user->getUserData($username, "user_email"); ?>
                 </td>
               </tr>
-
               <tr class="profile_tableRow">
                 <td class="profile_tableHeader">Followers:</td>
                 <td class="profile_tableData">
@@ -223,7 +188,6 @@ if($_SESSION['logged_user'] != $username){
                 </td>
               </tr>
             </table>
-
           </div>
 
           <div class="col-12 col-md-3 profile_aboutInfo">
@@ -232,56 +196,23 @@ if($_SESSION['logged_user'] != $username){
               asdadsasdasdadsasdasdadsasdasdadsasdasdadsasdasdadsasdasdadsasd
             </div>
           </div>
-
         </div>
       </div>
 
       <hr>
+
       <div class="partHeader">
         <?php echo $postsHeader; ?>
       </div>
-      <div class="posts" id="posts">
-        <!-- POSTS -->
-        <?php
-        /*
-          $post = new Post();
-          $post->getPosts($username);
-        */
-        ?>
-      </div>
 
+      <div class="posts" id="posts">
+        <!-- POSTS (loading with ajax)-->
+      </div>
 
       <div class="loadMoreDiv">
         <button type="button" id="loadMoreButton" class="loadMoreButton">Load more</button>
       </div>
-
     </div>
   </body>
 
 </html>
-
-<?php
-
-
-?>
-
-<?php
-
-
-/*
-include "includes/db-inc.php";
-//include "includes/user-inc.php";
-include "includes/post-inc.php";
-
-if(isset($_GET['username'])){
-  $user_name = $_GET['username'];
-  $user = new User();
-  echo "Username: ".$user->getUserData($user_name, "user_name")."<br />";
-  echo "Email: ".$user->getUserData($user_name, "user_email")."<br />";
-  echo "Logged user: ".$user->getLoggedUserData("user_pwd");
-
-}else{
-  header("Location: index.php");
-}
-*/
-?>

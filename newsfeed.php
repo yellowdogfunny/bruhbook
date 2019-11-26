@@ -17,6 +17,7 @@ if(isset($_SESSION['logged_user'])){
     ?>
 
     <link rel="icon" href="images/bruhbook_icon.ico" type="image/x-icon">
+    <script src="scripts/jquery.ajaxfileupload.js"></script>
     <script>
 
       $(document).ready(function(){
@@ -93,17 +94,29 @@ if(isset($_SESSION['logged_user'])){
         });
 
 
-        //Post a status
+
+
+        //Post a status (txt only)
+        /*
         $("#post_btn").on('click', function(){
+
+          //var formData = new FormData();
+          //formData.append('file', $('input[type=file]')[0].files[0]);
+
+
+
           $.ajax({
             url: "php/create-post.php",
-            type: "GET",
+            type: "POST",
             data: {
-              post_button: "post_button",
-              post_content: $("#post_content").val()
+              post_content: $("#post_content").val(),
+              post_btn: "post_button"//,
+              //formData
             },
+            //contentType: false,
+            //processData: false,
             success: function(data){
-              //alert("Successfuly posted!");
+              //alert("Content uploaded!");
               $("#posts").load("php/showPosts.php", {
                 newNum: postNum,
                 from: postsFrom
@@ -112,22 +125,35 @@ if(isset($_SESSION['logged_user'])){
               $("#post_content").val("");
             }
           });
-        });
 
-      });
-/*
-        var postNum = 5;
-        var newNum = 0;
-        var from;
-        $("#loadMoreButton").click(function(){
-          postNum = postNum + 5;
-          console.log(postNum);
-          $("#posts").load("classes/post.class.php", {
-            newNum : postNum,
-            from : "<?php //echo $from; ?>"
+        });
+        */
+
+        //webleeson - upload post text and post img
+        $("#upload_form").on('submit', function(e){
+          e.preventDefault();
+          $.ajax({
+            url: "php/create-post.php",
+            method: "POST",
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success:function(data){
+              //alert("Uploaded");
+              $("#posts").load("php/showPosts.php", {
+                newNum: postNum,
+                from: postsFrom
+              });
+
+              $("#post_content").val("");
+              $(".chooseFile").val("");
+            }
           });
         });
-*/
+
+
+      });
 
 
     </script>
@@ -140,7 +166,8 @@ if(isset($_SESSION['logged_user'])){
 
       <!-- Post a status container -->
       <div class="postStatusContainer">
-        <form class="" action="" method="">
+         <!-- action="php/create-post.php" method="POST" enctype="multipart/form-data" -->
+        <form method="POST" id="upload_form" enctype="multipart/form-data">
           <div class="row">
 
             <div class="col-12 col-md-9 column_nopadding">
@@ -157,14 +184,15 @@ if(isset($_SESSION['logged_user'])){
                 </div>
 
                 <div class="col-4 col-md-12 column_nopadding">
-                  <button class="btn btn-danger postStatusButtons" name="" disabled>Upload image</button>
+                  <input type="file" name="upload_file" class="btn btn-danger postStatusButtons chooseFile" value="Upload file">
                 </div>
 
                 <div class="col-4 col-md-12  column_nopadding">
-                  <button type="button" class="btn btn-danger postStatusButtons" id="post_btn">Post</button>
+                  <input type="submit" name="upload_button" class="btn btn-danger postStatusButtons">
                 </div>
               </div>
             </div>
+            <span id="uploaded_image"></span>
           </div>
         </form>
 

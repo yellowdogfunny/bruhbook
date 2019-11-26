@@ -262,7 +262,6 @@ class Post extends Database{
               <hr>
 
               <!-- status buttons -->
-              <!-- status buttons -->
               <div class="statusButtonsContainer">
 
                 <span id="numberOfLikes_p<?php echo $post_id; ?>" class="nLikes">
@@ -284,7 +283,11 @@ class Post extends Database{
                 <span class="statusButton"><?php echo $post_date; ?></span>
 
               </div>
-
+              <div class="postDeletedOverlay"  style="visibility:hidden;">
+                <div class="postDeletedOverlayTxt">
+                  POST DELETED
+                </div>
+              </div>
           </div>
           <script>
 
@@ -334,11 +337,11 @@ class Post extends Database{
     // Show all followers posts
 
     // Create post
-    public function createPost($user, $post_txt){
+    public function createPost($user, $post_txt, $post_img){
       $date = date("d.m.Y");
-      $sql_createPost = "INSERT INTO posts_table (post_user, post_text, post_date)
+      $sql_createPost = "INSERT INTO posts_table (post_user, post_text, post_img, post_date)
         VALUES
-        ('$user', '$post_txt', '$date')
+        ('$user', '$post_txt', '$post_img', '$date')
       ";
 
       $result = mysqli_query(Database::connect(), $sql_createPost);
