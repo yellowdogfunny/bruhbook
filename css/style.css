@@ -1197,3 +1197,18 @@ body{
   height: 100%;
   box-shadow: 0px 0px 10px rgb(255, 67, 67);
 }
+
+@media(max-width: 900px){
+  .post_image{
+    height: auto;
+  }
+
+  .post_image img{
+    max-width: none;
+    max-height: none;
+    width: 100%;
+    height: auto;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+}
