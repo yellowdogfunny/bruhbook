@@ -1182,5 +1182,18 @@ body{
 }
 
 .chooseFile{
-  
+
+}
+
+.post_image{
+  width: 100%;
+  /*border: 1px solid blue;*/
+  height: 500px;
+  text-align: center;
+}
+
+.post_image img{
+  max-width: 80%;
+  height: 100%;
+  box-shadow: 0px 0px 10px rgb(255, 67, 67);
 }

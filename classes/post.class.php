@@ -91,12 +91,34 @@ class Post extends Database{
                       </a>
                     </object>
 
-                    <hr>
+
 
                     <!-- da status -->
-                    <div class="statusText">
-                        <?php echo $post_text; ?>
-                    </div>
+                    <?php
+                      if($post_text == "null_txt"){
+                        echo "";
+                      }else{
+                        ?>
+                        <hr>
+                        <div class="statusText">
+                            <?php echo $post_text; ?>
+                        </div>
+
+                        <?php
+                      }
+
+                      if($post_img == "null_img"){
+                        echo "";
+                      }else{
+                        ?>
+                        <hr>
+                        <div class="post_image">
+                          <img src="<?php echo $post_img; ?>" alt="">
+                        </div>
+                        <?php
+                      }
+                    ?>
+
 
 
                     <hr>
@@ -119,7 +141,10 @@ class Post extends Database{
 
                       </button>
 
-                      <span class="statusButton commentButton"> <?php $comment->numComments($post_id); ?> &nbsp; <i class="far fa-comment"></i></span>
+                      <a href="view_post.php?postId=<?php echo $post_id; ?>&username=<?php echo $post_user; ?>" class="postLink">
+                        <span class="statusButton commentButton"> <?php $comment->numComments($post_id); ?> &nbsp; <i class="far fa-comment"></i></span>
+                      </a>
+
                       <span class="statusButton"><?php echo $post_date; ?></span>
 
                     </div>
@@ -246,19 +271,40 @@ class Post extends Database{
                   </div>
                 </div>
               </a>
-              <hr>
+
               <!-- edit post -->
               <div class="editPostDiv" style="display:none;">
                 <textarea class="form-control editPostTextArea" placeholder="Edit post..." rows="3" maxlength="350"><?php echo $post_text; ?></textarea><br>
                 <button type="button" id="applyNewPost" name="button" class="btn btn-danger">Apply changes</button>
                 <button type="button" id="cancelEditingPost" name="button" class="btn btn-danger">Cancel</button>
-                <hr>
+
               </div>
 
               <!-- da status -->
-              <div class="statusText" style="visibility:visible;">
-                <?php echo $post_text; ?>
-              </div>
+              <?php
+                if($post_text == "null_txt"){
+                  echo "";
+                }else{
+                  ?>
+                  <hr>
+                  <div class="statusText">
+                      <?php echo $post_text; ?>
+                  </div>
+
+                  <?php
+                }
+
+                if($post_img == "null_img"){
+                  echo "";
+                }else{
+                  ?>
+                  <hr>
+                  <div class="post_image">
+                    <img src="<?php echo $post_img; ?>" alt="">
+                  </div>
+                  <?php
+                }
+              ?>
               <hr>
 
               <!-- status buttons -->
@@ -279,7 +325,10 @@ class Post extends Database{
 
                 </button>
 
+
                 <span class="statusButton commentButton"> <?php $comment->numComments($post_id); ?> &nbsp; <i class="far fa-comment"></i></span>
+
+
                 <span class="statusButton"><?php echo $post_date; ?></span>
 
               </div>

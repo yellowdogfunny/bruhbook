@@ -1,12 +1,19 @@
-
 <?php
-session_start();
+//session_cache_limiter('private, must-revalidate');
+//session_cache_expire(60);
+
+if(!isset($_SESSION)) {
+  session_start();
+}
+
+//session_start();
 include 'includes/class-autoloader.php';
 
 if(isset($_SESSION['logged_user'])){
   $loggedUser = new User();
 
 ?>
+
 <html lang="en">
   <head>
     <?php
