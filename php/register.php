@@ -2,7 +2,7 @@
   session_start();
 
   require_once("../classes/user.class.php");
-
+  require_once("../classes/follow.class.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,6 +54,9 @@
                         $imgUrl = "./images/".$regUsername."/".$randImgName;
                         $newUser = new User();
                         $newUser->register($imgUrl, $regUsername, $regEmail, $regPwd);
+
+                        $autoFollow = new Follow();
+                        $autoFollow->follow_function($regUsername, $regUsername);
                     }
 
 

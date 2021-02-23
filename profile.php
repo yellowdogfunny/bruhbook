@@ -175,7 +175,7 @@ if($_SESSION['logged_user'] != $username){
                 <td class="profile_tableHeader">Following:</td>
                 <td class="profile_tableData">
                   <?php
-                    $user->getNumFollowing($username);
+                    $user->getNumFollowing($username)-1; // -1 cuz sebe followa automatski (da se prikazuju postovi na pocetnoj)
                   ?>
                 </td>
               </tr>

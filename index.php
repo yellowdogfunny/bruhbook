@@ -25,6 +25,13 @@
     if(isset($_SESSION['logged_user'])){
 
       $message = "Login sucess - ".$_SESSION['logged_user'];
+
+      //da se odma followa
+      /*
+      //probem: svaki put kad se logira, switcha se follow/unfollow 
+      $fbtn = new Follow();
+      $fbtn->follow_function($_SESSION['logged_user'], $_SESSION['logged_user']);
+      */
       header("refresh:0.25;url=newsfeed.php"); //Ovo chengat na newsfeed.php
     }else{
       $message = "Invalid username or password";
